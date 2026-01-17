@@ -1,0 +1,94 @@
+﻿<Window x:Class="music4life.Views.CreatePlaylistWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Create Playlist" Height="240" Width="400"
+        WindowStartupLocation="CenterOwner"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        ResizeMode="NoResize">
+
+    <Window.Resources>
+        <SolidColorBrush x:Key="Brush.Bg.Secondary" Color="#1E1E1E"/>
+        <SolidColorBrush x:Key="Brush.Bg.Tertiary" Color="#2A2A2A"/>
+        <SolidColorBrush x:Key="Brush.Accent" Color="#00b4d8"/>
+        <SolidColorBrush x:Key="Brush.Border" Color="#333333"/>
+    </Window.Resources>
+
+    <Border Background="{StaticResource Brush.Bg.Secondary}" CornerRadius="12" 
+            BorderBrush="{StaticResource Brush.Border}" BorderThickness="1">
+
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="20" ShadowDepth="5" Opacity="0.6" Direction="270"/>
+        </Border.Effect>
+
+        <Grid Margin="25">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Text="Tạo danh sách phát" FontSize="20" FontWeight="Bold" 
+                       Foreground="White" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+
+            <StackPanel Grid.Row="1" VerticalAlignment="Center">
+                <TextBlock Text="Name" Foreground="#B3B3B3" FontSize="12" Margin="0,0,0,8" FontWeight="SemiBold"/>
+
+                <Border Background="{StaticResource Brush.Bg.Tertiary}" CornerRadius="4" Height="40">
+                    <TextBox x:Name="TxtPlaylistName" Background="Transparent" BorderThickness="0" 
+                             Foreground="White" VerticalContentAlignment="Center" Padding="10,0" FontSize="14"
+                             CaretBrush="White" Text="My Awesome Mix"/>
+                </Border>
+            </StackPanel>
+
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
+
+                <Button Content="HUỶ" Foreground="White" Background="Transparent" 
+                        Width="100" Height="35" Cursor="Hand" FontWeight="Bold" FontSize="12" Click="BtnClose_Click">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}" CornerRadius="17" BorderBrush="#555" BorderThickness="0">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Foreground" Value="#FFF"/>
+                                    <Setter Property="Opacity" Value="0.7"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+                <Button Content="TẠO" 
+                        Click="BtnCreate_Click"
+                        Foreground="White" 
+                        Background="{StaticResource Brush.Accent}" 
+                        FontWeight="Bold" 
+                        FontSize="12"
+                        Width="120" Height="35" 
+                        Margin="15,0,0,0" 
+                        Cursor="Hand">
+
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}" CornerRadius="17">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#1ED760"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>
