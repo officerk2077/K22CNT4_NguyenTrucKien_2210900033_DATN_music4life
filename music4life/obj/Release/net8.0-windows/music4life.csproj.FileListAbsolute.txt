@@ -107,3 +107,4 @@ D:\ĐATN\music4life\music4life\obj\Release\net8.0-windows\ref\music4life.dll
 D:\ĐATN\music4life\music4life\obj\Release\net8.0-windows\Views\ArtistsView.baml
 D:\ĐATN\music4life\music4life\obj\Release\net8.0-windows\Views\ArtistsView.g.cs
 D:\ĐATN\music4life\music4life\obj\Release\net8.0-windows\GeneratedInternalTypeHelper.g.cs
+D:\ĐATN\music4life\music4life\obj\Release\net8.0-windows\music4life.sourcelink.json
