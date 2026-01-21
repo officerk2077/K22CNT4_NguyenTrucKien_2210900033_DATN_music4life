@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Text.Json;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -17,60 +18,75 @@ namespace music4life
     {
         private MainViewModel _viewModel;
 
+        private object _songListViewCache;
+        private object _albumViewCache;
+        private object _artistViewCache;
+        private object _genreViewCache;
+
         public MainWindow()
         {
             InitializeComponent();
 
             _viewModel = new MainViewModel();
-
-            _viewModel.RequestOpenSongList += () =>
-            {
-                MainContent.Content = new SongListView();
-            };
-
             this.DataContext = _viewModel;
+
+            _viewModel.RequestOpenSongList += () => SwitchToSongList();
 
             LoadAndScanMusicOnStartup();
 
-            MainContent.Content = new SongListView();
+            SwitchToSongList();
         }
-        private void Volume_MouseWheel(object sender, MouseWheelEventArgs e)
+        private void SwitchToSongList()
         {
-            if (_viewModel != null)
+            if (_songListViewCache == null) _songListViewCache = new SongListView();
+            MainContent.Content = _songListViewCache;
+        }
+
+        private void BtnAllSongs_Click(object sender, RoutedEventArgs e)
+        {
+            _viewModel.SearchText = string.Empty;
+            _viewModel.RefreshData(_viewModel.AllSongs.ToList());
+            SwitchToSongList();
+        }
+
+        private void BtnAlbums_Click(object sender, RoutedEventArgs e)
+        {
+            if (_albumViewCache == null)
             {
-                double step = e.Delta > 0 ? 2 : -2;
-                _viewModel.ChangeVolume(step);
+                _albumViewCache = new AlbumView();
+                _viewModel.LoadAlbumsAsync();
             }
-            e.Handled = true;
+            MainContent.Content = _albumViewCache;
         }
 
-        private void Slider_DragStarted(object sender, DragStartedEventArgs e)
+        private void BtnArtists_Click(object sender, RoutedEventArgs e)
         {
-            if (_viewModel != null) _viewModel.IsDragging = true;
-        }
-
-        private void Slider_DragCompleted(object sender, DragCompletedEventArgs e)
-        {
-            if (_viewModel != null)
+            if (_artistViewCache == null)
             {
-                _viewModel.IsDragging = false;
-                _viewModel.SeekTo(seekSlider.Value);
+                _artistViewCache = new ArtistsView();
+                _viewModel.LoadArtistsAsync();
             }
+            MainContent.Content = _artistViewCache;
         }
 
-        private void seekSlider_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void BtnGenres_Click(object sender, RoutedEventArgs e)
         {
-            if (_viewModel != null)
+            if (_genreViewCache == null)
             {
-                if (!_viewModel.IsDragging)
-                {
-                    _viewModel.SeekTo(seekSlider.Value);
-                }
+                _genreViewCache = new GenresView();
+                _viewModel.LoadGenresAsync();
             }
+            MainContent.Content = _genreViewCache;
         }
 
-        private void seekSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) { }
-
+        private void BtnFavorites_Click(object sender, RoutedEventArgs e)
+        {
+            if (_viewModel.ShowFavoritesCommand.CanExecute(null))
+            {
+                _viewModel.ShowFavoritesCommand.Execute(null);
+                SwitchToSongList();
+            }
+        }
         private async void LoadAndScanMusicOnStartup()
         {
             if (File.Exists("settings.json"))
@@ -84,87 +100,11 @@ namespace music4life
                     {
                         await MusicManager.ScanMusic(settings.MusicFolders);
 
-                        if (_viewModel != null)
-                        {
-                            var songs = MusicManager.AllTracks;
-                            _viewModel.RefreshData(songs.ToList());
-                        }
+                        var songs = MusicManager.AllTracks;
+                        _viewModel.RefreshData(songs.ToList());
                     }
                 }
                 catch { }
-            }
-        }
-
-        private void BtnAllSongs_Click(object sender, RoutedEventArgs e)
-        {
-            if (_viewModel != null)
-            {
-                _viewModel.SearchText = string.Empty;
-                _viewModel.RefreshData(_viewModel.AllSongs.ToList());
-            }
-
-            MainContent.Content = new SongListView();
-        }
-
-        private void BtnAlbums_Click(object sender, RoutedEventArgs e)
-        {
-            if (_viewModel != null)
-            {
-                _viewModel.LoadAlbums();
-
-                MainContent.Content = new AlbumView();
-            }
-        }
-
-        private void BtnArtists_Click(object sender, RoutedEventArgs e)
-        {
-           if (_viewModel != null)
-           {
-               _viewModel.LoadArtists();
-               MainContent.Content = new ArtistsView();
-           }
-        }
-
-        private void BtnGenres_Click(object sender, RoutedEventArgs e)
-        {
-            if (_viewModel != null)
-            {
-                _viewModel.LoadGenres();
-
-                MainContent.Content = new GenresView();
-            }
-        }
-
-        private void BtnNewPlaylist_Click(object sender, RoutedEventArgs e)
-{
-    this.Opacity = 0.5;
-    
-    var createWindow = new music4life.Views.CreatePlaylistWindow();
-    createWindow.Owner = this;
-    
-    if (createWindow.ShowDialog() == true)
-    {
-        string newPlaylistName = createWindow.CreatedPlaylistName;
-
-        if (this.DataContext is MainViewModel vm)
-        {
-            if (vm.CreatePlaylistCommand.CanExecute(newPlaylistName))
-            {
-                vm.CreatePlaylistCommand.Execute(newPlaylistName);
-            }
-        }
-    }
-
-    this.Opacity = 1.0;
-}
-
-        private void BtnFavorites_Click(object sender, RoutedEventArgs e)
-        {
-            if (_viewModel != null && _viewModel.ShowFavoritesCommand.CanExecute(null))
-            {
-                _viewModel.ShowFavoritesCommand.Execute(null);
-
-                MainContent.Content = new SongListView();
             }
         }
 
@@ -176,11 +116,53 @@ namespace music4life
             settingWindow.ShowDialog();
             this.Opacity = 1.0;
         }
-        private void BtnCloseApp_Click(object sender, RoutedEventArgs e)
-            => System.Windows.Application.Current.Shutdown();
 
-        private void BtnMinimize_Click(object sender, RoutedEventArgs e)
-            => this.WindowState = WindowState.Minimized;
+        private void BtnNewPlaylist_Click(object sender, RoutedEventArgs e)
+        {
+            this.Opacity = 0.5;
+            var createWindow = new music4life.Views.CreatePlaylistWindow();
+            createWindow.Owner = this;
+
+            if (createWindow.ShowDialog() == true)
+            {
+                string newPlaylistName = createWindow.CreatedPlaylistName;
+                if (_viewModel.CreatePlaylistCommand.CanExecute(newPlaylistName))
+                {
+                    _viewModel.CreatePlaylistCommand.Execute(newPlaylistName);
+                }
+            }
+            this.Opacity = 1.0;
+        }
+        private void Volume_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            double step = e.Delta > 0 ? 2 : -2;
+            _viewModel.ChangeVolume(step);
+            e.Handled = true;
+        }
+
+        private void Slider_DragStarted(object sender, DragStartedEventArgs e)
+        {
+            _viewModel.IsDragging = true;
+        }
+
+        private void Slider_DragCompleted(object sender, DragCompletedEventArgs e)
+        {
+            _viewModel.IsDragging = false;
+            if (sender is Slider s) _viewModel.SeekTo(s.Value);
+        }
+
+        private void seekSlider_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (!_viewModel.IsDragging && sender is Slider s)
+            {
+                _viewModel.SeekTo(s.Value);
+            }
+        }
+
+        private void seekSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) { }
+        private void BtnCloseApp_Click(object sender, RoutedEventArgs e) => System.Windows.Application.Current.Shutdown();
+
+        private void BtnMinimize_Click(object sender, RoutedEventArgs e) => this.WindowState = WindowState.Minimized;
 
         private void BtnMaximize_Click(object sender, RoutedEventArgs e)
         {
@@ -198,11 +180,7 @@ namespace music4life
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
             base.OnMouseLeftButtonDown(e);
-            try
-            {
-                this.DragMove();
-            }
-            catch { }
+            try { this.DragMove(); } catch { }
         }
     }
 }

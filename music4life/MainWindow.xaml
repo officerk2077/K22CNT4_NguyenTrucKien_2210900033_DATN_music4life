@@ -3,9 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        
         xmlns:views="clr-namespace:music4life.Views" 
-        
         mc:Ignorable="d"
         Title="Windows Music Player" Height="768" Width="1280"
         WindowStartupLocation="CenterScreen"
@@ -47,13 +45,13 @@
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Foreground" Value="#E0E0E0"/>
             <Setter Property="FontSize" Value="13"/>
-            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type MenuItem}">
                         <Border x:Name="Border" Background="{TemplateBinding Background}" BorderThickness="0" Padding="15,8">
                             <ContentPresenter ContentSource="Header"
-                                              HorizontalAlignment="Center"
+                                              HorizontalAlignment="Left"
                                               VerticalAlignment="Center"
                                               RecognizesAccessKey="True"
                                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
@@ -301,6 +299,7 @@
                         </Grid>
 
                         <TextBlock Text="Thư viện" Foreground="{StaticResource Brush.Text.Secondary}" FontWeight="Bold" FontSize="11" Margin="20,0,0,8"/>
+
                         <StackPanel>
                             <Button Style="{StaticResource SidebarBtnStyle}" Click="BtnAllSongs_Click">
                                 <StackPanel Orientation="Horizontal">
@@ -328,6 +327,7 @@
                                     <TextBlock Text="Albums" VerticalAlignment="Center"/>
                                 </StackPanel>
                             </Button>
+
                             <Button Style="{StaticResource SidebarBtnStyle}" Click="BtnGenres_Click">
                                 <StackPanel Orientation="Horizontal">
                                     <Path Data="M5.5,7A1.5,1.5 0 0,1 4,5.5A1.5,1.5 0 0,1 7,5.5A1.5,1.5 0 0,1 5.5,7M21.41,11.58L12.41,2.58C12.05,2.22 11.55,2 11,2H4C2.89,2 2,2.89 2,4V11C2,11.55 2.22,12.05 2.58,12.41L11.58,21.41C11.95,21.77 12.45,22 13,22C13.55,22 14.05,21.77 14.41,21.41L21.41,14.41C21.78,14.05 22,13.55 22,13C22,12.45 21.77,11.94 21.41,11.58Z" 
@@ -353,23 +353,30 @@
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <Button Style="{StaticResource SidebarBtnStyle}" 
-                                                Command="{Binding DataContext.OpenPlaylistCommand, RelativeSource={RelativeSource AncestorType=Window}}"
-                                                CommandParameter="{Binding}">
+                Command="{Binding DataContext.OpenPlaylistCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                CommandParameter="{Binding}"
+                Tag="{Binding DataContext, RelativeSource={RelativeSource AncestorType=Window}}">
 
                                             <Button.ContextMenu>
                                                 <ContextMenu Style="{DynamicResource DarkContextMenuStyle}">
+                                                    <MenuItem Header="Đổi tên" 
+                                                      Foreground="#E0E0E0"
+                                                      Style="{DynamicResource DarkMenuItemStyle}"
+                                                      Command="{Binding PlacementTarget.Tag.RenamePlaylistCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
+                                                      CommandParameter="{Binding}"/>
+
                                                     <MenuItem Header="Xóa Playlist" 
-                                                              Foreground="#FF5555"
-                                                              Style="{DynamicResource DarkMenuItemStyle}"
-                                                              Command="{Binding DataContext.DeletePlaylistCommand, RelativeSource={RelativeSource AncestorType=Window}}"
-                                                              CommandParameter="{Binding}"/>
+                                                      Foreground="#FF5555"
+                                                      Style="{DynamicResource DarkMenuItemStyle}"
+                                                      Command="{Binding PlacementTarget.Tag.DeletePlaylistCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
+                                                      CommandParameter="{Binding}"/>
                                                 </ContextMenu>
                                             </Button.ContextMenu>
 
                                             <StackPanel Orientation="Horizontal">
                                                 <Path Data="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M15,13H13V15H11V13H9V11H11V9H13V11H15V13Z" 
-                                                      Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" 
-                                                      Width="14" Height="14" Stretch="Uniform" Margin="0,0,15,0" Opacity="0.7"/>
+                                                  Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" 
+                                                  Width="14" Height="14" Stretch="Uniform" Margin="0,0,15,0" Opacity="0.7"/>
 
                                                 <TextBlock Text="{Binding Name}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
                                             </StackPanel>
@@ -715,8 +722,8 @@
                                 Command="{Binding ToggleRepeatCommand}">
                             <Grid>
                                 <Path x:Name="iconRepeat" 
-                                      Data="M17,17H7V14L3,18L7,22V19H19V13H17M7,7H17V10L21,6L17,2V5H5V11H7V7Z" 
-                                      Stretch="Uniform" Height="20" Width="20">
+                                    Data="M17,17H7V14L3,18L7,22V19H19V13H17M7,7H17V10L21,6L17,2V5H5V11H7V7Z" 
+                                    Stretch="Uniform" Height="20" Width="20">
                                     <Path.Style>
                                         <Style TargetType="Path">
                                             <Setter Property="Fill" Value="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}"/>

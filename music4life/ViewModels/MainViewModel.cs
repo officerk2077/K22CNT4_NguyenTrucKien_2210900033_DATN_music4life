@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -42,6 +43,7 @@ namespace music4life.ViewModels
                 if (_selectedSong != null) UpdateSongInfoDisplay(_selectedSong);
             }
         }
+
         private ObservableCollection<GenreInfo> _genreList; public ObservableCollection<GenreInfo> GenreList { get => _genreList; set { _genreList = value; OnPropertyChanged(); } }
         private ObservableCollection<ArtistInfo> _artistList; public ObservableCollection<ArtistInfo> ArtistList { get => _artistList; set { _artistList = value; OnPropertyChanged(); } }
         private ObservableCollection<AlbumInfo> _albumList; public ObservableCollection<AlbumInfo> AlbumList { get => _albumList; set { _albumList = value; OnPropertyChanged(); } }
@@ -81,6 +83,7 @@ namespace music4life.ViewModels
         private string _songYear; public string SongYear { get => _songYear; set { _songYear = value; OnPropertyChanged(); } }
         private string _songTechInfo; public string SongTechInfo { get => _songTechInfo; set { _songTechInfo = value; OnPropertyChanged(); } }
 
+        // Commands
         public ICommand PlayPauseCommand { get; set; }
         public ICommand NextCommand { get; set; }
         public ICommand PreviousCommand { get; set; }
@@ -98,12 +101,18 @@ namespace music4life.ViewModels
         public ICommand CreatePlaylistCommand { get; set; }
         public ICommand AddSongToPlaylistCommand { get; set; }
         public ICommand OpenPlaylistCommand { get; set; }
-
         public ICommand DeletePlaylistCommand { get; set; }
+
+        // ✅ THÊM MỚI: Command đổi tên playlist
+        public ICommand RenamePlaylistCommand { get; set; }
 
         public MainViewModel()
         {
             DisplayedTracks = new ObservableCollection<Song>();
+            GenreList = new ObservableCollection<GenreInfo>();
+            ArtistList = new ObservableCollection<ArtistInfo>();
+            AlbumList = new ObservableCollection<AlbumInfo>();
+
             MusicPlayer.SongChanged += OnSongChanged;
             MusicPlayer.PlaybackStateChanged += OnPlaybackStateChanged;
             MusicPlayer.PositionChanged += OnPositionChanged;
@@ -223,8 +232,15 @@ namespace music4life.ViewModels
             OpenGenreCommand = new RelayCommand<string>((genreName) => { FilterSongsByGenre(genreName); RequestOpenSongList?.Invoke(); });
             CreatePlaylistCommand = new RelayCommand<string>((name) => { if (!string.IsNullOrEmpty(name)) { PlaylistService.CreatePlaylist(name); UserPlaylists = PlaylistService.AllPlaylists; } });
 
-            AddSongToPlaylistCommand = new RelayCommand<Playlist>((targetPlaylist) => {
-                if (targetPlaylist != null && SelectedSong != null) { PlaylistService.AddSongToPlaylist(targetPlaylist, SelectedSong.FilePath); System.Windows.MessageBox.Show($"Đã thêm '{SelectedSong.Title}' vào playlist '{targetPlaylist.Name}'", "Thành công"); }
+            AddSongToPlaylistCommand = new RelayCommand<object>((param) => {
+                Playlist targetPlaylist = param as Playlist;
+                if (targetPlaylist == null && param is object[] args && args.Length > 0) targetPlaylist = args[0] as Playlist;
+
+                if (targetPlaylist != null && SelectedSong != null)
+                {
+                    PlaylistService.AddSongToPlaylist(targetPlaylist, SelectedSong.FilePath);
+                    System.Windows.MessageBox.Show($"Đã thêm '{SelectedSong.Title}' vào playlist '{targetPlaylist.Name}'", "Thành công");
+                }
                 else if (SelectedSong == null) { System.Windows.MessageBox.Show("Vui lòng chọn một bài hát trước!", "Thông báo"); }
             });
 
@@ -237,7 +253,6 @@ namespace music4life.ViewModels
             DeletePlaylistCommand = new RelayCommand<Playlist>((playlist) =>
             {
                 if (playlist == null) return;
-
                 var result = System.Windows.MessageBox.Show(
                     $"Bạn có chắc muốn xóa playlist '{playlist.Name}' không?",
                     "Xác nhận xóa",
@@ -250,14 +265,120 @@ namespace music4life.ViewModels
                     UserPlaylists = PlaylistService.AllPlaylists;
                 }
             });
+
+            RenamePlaylistCommand = new RelayCommand<Playlist>((playlist) =>
+            {
+                if (playlist == null) return;
+                var renameWindow = new music4life.Views.CreatePlaylistWindow(playlist.Name);
+
+                if (System.Windows.Application.Current.MainWindow != null)
+                {
+                    renameWindow.Owner = System.Windows.Application.Current.MainWindow;
+                    System.Windows.Application.Current.MainWindow.Opacity = 0.5;
+                }
+
+                if (renameWindow.ShowDialog() == true)
+                {
+                    string newName = renameWindow.CreatedPlaylistName;
+                    PlaylistService.RenamePlaylist(playlist, newName);
+                }
+
+                if (System.Windows.Application.Current.MainWindow != null)
+                {
+                    System.Windows.Application.Current.MainWindow.Opacity = 1.0;
+                }
+            });
+        }
+        public void RefreshData(List<Song> newSongs)
+        {
+            if (newSongs == null) return;
+            _isViewingFavorites = false;
+            foreach (var song in newSongs)
+            {
+                if (FavoriteService.IsFavorite(song.FilePath)) song.IsFavorite = true;
+            }
+            AllSongs = new ObservableCollection<Song>(newSongs);
+            DisplayedTracks = new ObservableCollection<Song>(newSongs);
+            TotalSongs = DisplayedTracks.Count;
+
+            if (!string.IsNullOrEmpty(_currentSortType)) ApplySort(_currentSortType);
         }
 
-        public void RefreshData(List<Song> newSongs) { if (newSongs == null) return; _isViewingFavorites = false; foreach (var song in newSongs) { if (FavoriteService.IsFavorite(song.FilePath)) song.IsFavorite = true; } AllSongs = new ObservableCollection<Song>(newSongs); DisplayedTracks = new ObservableCollection<Song>(newSongs); TotalSongs = DisplayedTracks.Count; LoadAlbums(); LoadGenres(); if (!string.IsNullOrEmpty(_currentSortType)) ApplySort(_currentSortType); }
-        public void LoadArtists() { var groups = AllSongs.GroupBy(s => s.Artist).Select(g => { var firstSong = g.FirstOrDefault(); ImageSource avatar = null; if (firstSong != null) avatar = GetSongCover(firstSong.FilePath); return new ArtistInfo { Name = g.Key, SongCount = g.Count(), ArtistImage = avatar }; }).OrderBy(a => a.Name).ToList(); ArtistList = new ObservableCollection<ArtistInfo>(groups); }
+        public async void LoadAlbumsAsync()
+        {
+            if (AlbumList != null && AlbumList.Count > 0) return;
+
+            await Task.Run(() =>
+            {
+                if (AllSongs == null || AllSongs.Count == 0) return;
+
+                var groups = AllSongs.GroupBy(s => s.Album).Select(g =>
+                {
+                    var firstSong = g.FirstOrDefault();
+                    ImageSource cover = null;
+                    string artistName = "Unknown Artist";
+                    if (firstSong != null)
+                    {
+                        cover = GetSongCover(firstSong.FilePath);
+                        artistName = firstSong.Artist;
+                    }
+                    string albumTitle = string.IsNullOrWhiteSpace(g.Key) ? "Unknown Album" : g.Key;
+                    return new AlbumInfo { Title = albumTitle, Artist = artistName, SongCount = g.Count(), AlbumCover = cover };
+                }).OrderBy(a => a.Title).ToList();
+
+                System.Windows.Application.Current.Dispatcher.Invoke(() =>
+                {
+                    AlbumList = new ObservableCollection<AlbumInfo>(groups);
+                });
+            });
+        }
+
+        public async void LoadArtistsAsync()
+        {
+            if (ArtistList != null && ArtistList.Count > 0) return;
+
+            await Task.Run(() =>
+            {
+                if (AllSongs == null || AllSongs.Count == 0) return;
+
+                var groups = AllSongs.GroupBy(s => s.Artist).Select(g =>
+                {
+                    var firstSong = g.FirstOrDefault();
+                    ImageSource avatar = null;
+                    if (firstSong != null) avatar = GetSongCover(firstSong.FilePath);
+                    return new ArtistInfo { Name = g.Key, SongCount = g.Count(), ArtistImage = avatar };
+                }).OrderBy(a => a.Name).ToList();
+
+                System.Windows.Application.Current.Dispatcher.Invoke(() =>
+                {
+                    ArtistList = new ObservableCollection<ArtistInfo>(groups);
+                });
+            });
+        }
+
+        public async void LoadGenresAsync()
+        {
+            if (GenreList != null && GenreList.Count > 0) return;
+
+            await Task.Run(() =>
+            {
+                if (AllSongs == null || AllSongs.Count == 0) return;
+
+                var groups = AllSongs.GroupBy(s => s.Genre).Select(g =>
+                {
+                    string genreName = string.IsNullOrWhiteSpace(g.Key) ? "Unknown Genre" : g.Key;
+                    return new GenreInfo { Name = genreName, SongCount = g.Count() };
+                }).OrderBy(g => g.Name).ToList();
+
+                System.Windows.Application.Current.Dispatcher.Invoke(() =>
+                {
+                    GenreList = new ObservableCollection<GenreInfo>(groups);
+                });
+            });
+        }
+
         public void FilterSongsByArtist(string artistName) { _isViewingFavorites = false; var filtered = AllSongs.Where(s => s.Artist == artistName).ToList(); DisplayedTracks = new ObservableCollection<Song>(filtered); TotalSongs = DisplayedTracks.Count; if (!string.IsNullOrEmpty(_currentSortType)) ApplySort(_currentSortType); }
-        public void LoadAlbums() { if (AllSongs == null || AllSongs.Count == 0) return; var groups = AllSongs.GroupBy(s => s.Album).Select(g => { var firstSong = g.FirstOrDefault(); ImageSource cover = null; string artistName = "Unknown Artist"; if (firstSong != null) { cover = GetSongCover(firstSong.FilePath); artistName = firstSong.Artist; } string albumTitle = string.IsNullOrWhiteSpace(g.Key) ? "Unknown Album" : g.Key; return new AlbumInfo { Title = albumTitle, Artist = artistName, SongCount = g.Count(), AlbumCover = cover }; }).OrderBy(a => a.Title).ToList(); AlbumList = new ObservableCollection<AlbumInfo>(groups); }
         public void FilterSongsByAlbum(string albumName) { _isViewingFavorites = false; var filtered = AllSongs.Where(s => (string.IsNullOrWhiteSpace(albumName) && string.IsNullOrWhiteSpace(s.Album)) || s.Album == albumName).ToList(); DisplayedTracks = new ObservableCollection<Song>(filtered); TotalSongs = DisplayedTracks.Count; if (!string.IsNullOrEmpty(_currentSortType)) ApplySort(_currentSortType); }
-        public void LoadGenres() { if (AllSongs == null || AllSongs.Count == 0) return; var groups = AllSongs.GroupBy(s => s.Genre).Select(g => { string genreName = string.IsNullOrWhiteSpace(g.Key) ? "Unknown Genre" : g.Key; return new GenreInfo { Name = genreName, SongCount = g.Count() }; }).OrderBy(g => g.Name).ToList(); GenreList = new ObservableCollection<GenreInfo>(groups); }
         public void FilterSongsByGenre(string genreName) { _isViewingFavorites = false; var filtered = AllSongs.Where(s => (string.IsNullOrWhiteSpace(genreName) && string.IsNullOrWhiteSpace(s.Genre)) || s.Genre == genreName).ToList(); DisplayedTracks = new ObservableCollection<Song>(filtered); TotalSongs = DisplayedTracks.Count; if (!string.IsNullOrEmpty(_currentSortType)) ApplySort(_currentSortType); }
         private void FilterSongs() { _isViewingFavorites = false; if (string.IsNullOrWhiteSpace(SearchText)) { if (DisplayedTracks.Count != AllSongs.Count) { DisplayedTracks = new ObservableCollection<Song>(AllSongs); TotalSongs = DisplayedTracks.Count; if (!string.IsNullOrEmpty(_currentSortType)) ApplySort(_currentSortType); } return; } var lowerText = SearchText.ToLower(); var filtered = AllSongs.Where(s => (s.Title != null && s.Title.ToLower().Contains(lowerText)) || (s.Artist != null && s.Artist.ToLower().Contains(lowerText))).ToList(); DisplayedTracks = new ObservableCollection<Song>(filtered); TotalSongs = DisplayedTracks.Count; }
         public void ApplySort(string sortType) { _currentSortType = sortType; List<Song> sortedList = null; var sourceList = DisplayedTracks.ToList(); switch (sortType) { case "Title_AZ": sortedList = sourceList.OrderBy(s => s.Title).ToList(); break; case "Title_ZA": sortedList = sourceList.OrderByDescending(s => s.Title).ToList(); break; case "Artist": sortedList = sourceList.OrderBy(s => s.Artist).ToList(); break; case "Album": sortedList = sourceList.OrderBy(s => s.Album).ToList(); break; case "Duration_Short": sortedList = sourceList.OrderBy(s => s.Duration).ToList(); break; case "Duration_Long": sortedList = sourceList.OrderByDescending(s => s.Duration).ToList(); break; case "DateAdded": sortedList = sourceList.OrderByDescending(s => s.DateAdded).ToList(); break; } if (sortedList != null) DisplayedTracks = new ObservableCollection<Song>(sortedList); }

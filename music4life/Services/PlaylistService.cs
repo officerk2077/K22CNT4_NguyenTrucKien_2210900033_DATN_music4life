@@ -1,58 +1,43 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using music4life.Models;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
-using System.Text.Json;
-using music4life.Models;
 
 namespace music4life.Services
 {
     public static class PlaylistService
     {
-        private static string _filePath = "playlists.json";
         public static ObservableCollection<Playlist> AllPlaylists { get; private set; } = new ObservableCollection<Playlist>();
 
         static PlaylistService()
         {
+            DatabaseService.Init();
             Load();
         }
 
         public static void Load()
         {
-            if (File.Exists(_filePath))
-            {
-                try
-                {
-                    string json = File.ReadAllText(_filePath);
-                    var list = JsonSerializer.Deserialize<List<Playlist>>(json);
-                    if (list != null)
-                    {
-                        AllPlaylists = new ObservableCollection<Playlist>(list);
-                    }
-                }
-                catch { }
-            }
-        }
+            var playlists = DatabaseService.Conn.Table<Playlist>().ToList();
 
-        public static void Save()
-        {
-            try
+            foreach (var pl in playlists)
             {
-                string json = JsonSerializer.Serialize(AllPlaylists);
-                File.WriteAllText(_filePath, json);
+                var entries = DatabaseService.Conn.Table<PlaylistEntry>()
+                                                .Where(x => x.PlaylistId == pl.Id)
+                                                .ToList();
+                pl.SongPaths = entries.Select(x => x.SongPath).ToList();
             }
-            catch { }
+
+            AllPlaylists = new ObservableCollection<Playlist>(playlists);
         }
 
         public static void CreatePlaylist(string name)
         {
-            if (AllPlaylists.Any(p => p.Name.Equals(name, StringComparison.OrdinalIgnoreCase)))
-                return;
+            if (AllPlaylists.Any(p => p.Name == name)) return;
 
-            var newPl = new Playlist { Name = name };
+            var newPl = new Playlist { Name = name, CreatedDate = System.DateTime.Now };
+
+            DatabaseService.Conn.Insert(newPl);
+
             AllPlaylists.Add(newPl);
-            Save();
         }
 
         public static void AddSongToPlaylist(Playlist playlist, string songPath)
@@ -60,21 +45,38 @@ namespace music4life.Services
             if (playlist != null && !playlist.SongPaths.Contains(songPath))
             {
                 playlist.SongPaths.Add(songPath);
-                Save();
+
+                DatabaseService.Conn.Insert(new PlaylistEntry
+                {
+                    PlaylistId = playlist.Id,
+                    SongPath = songPath
+                });
             }
+        }
+
+        public static void RenamePlaylist(Playlist playlist, string newName)
+        {
+            if (playlist == null || string.IsNullOrWhiteSpace(newName)) return;
+
+            if (AllPlaylists.Any(p => p.Id != playlist.Id && p.Name == newName)) return;
+
+            playlist.Name = newName;
+
+            DatabaseService.Conn.Update(playlist);
         }
 
         public static void DeletePlaylist(Playlist playlist)
         {
             if (playlist == null) return;
 
-            var existing = AllPlaylists.FirstOrDefault(p => p.Name == playlist.Name);
-            if (existing != null)
+            if (AllPlaylists.Contains(playlist))
             {
-                AllPlaylists.Remove(existing);
-            }
+                DatabaseService.Conn.Delete<Playlist>(playlist.Id);
 
-            Save();
+                DatabaseService.Conn.Execute("DELETE FROM PlaylistEntry WHERE PlaylistId = ?", playlist.Id);
+
+                AllPlaylists.Remove(playlist);
+            }
         }
     }
-}   
+}

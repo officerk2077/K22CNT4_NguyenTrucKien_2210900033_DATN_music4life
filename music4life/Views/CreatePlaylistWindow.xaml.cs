@@ -10,7 +10,22 @@ namespace music4life.Views
         public CreatePlaylistWindow()
         {
             InitializeComponent();
+            SetupWindow();
+        }
 
+        public CreatePlaylistWindow(string currentName) : this()
+        {
+            TxtPlaylistName.Text = currentName;
+
+            TxtPlaylistName.SelectAll();
+            TxtPlaylistName.Focus();
+
+            if (lblTitle != null) lblTitle.Text = "Đổi tên Playlist";
+            if (btnConfirm != null) btnConfirm.Content = "LƯU";
+        }
+
+        private void SetupWindow()
+        {
             this.MouseLeftButtonDown += (s, e) =>
             {
                 if (e.ButtonState == MouseButtonState.Pressed) this.DragMove();

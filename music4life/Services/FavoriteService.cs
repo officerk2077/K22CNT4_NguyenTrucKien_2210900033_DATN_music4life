@@ -1,53 +1,30 @@
-﻿using System;
+﻿using music4life.Models;
 using System.Collections.Generic;
-using System.IO;
-using System.Text.Json;
+using System.Linq;
 
 namespace music4life.Services
 {
     public static class FavoriteService
     {
-        private static string _filePath = "favorites.json";
-
         public static HashSet<string> FavoritePaths { get; private set; } = new HashSet<string>();
 
         static FavoriteService()
         {
+            DatabaseService.Init();
             Load();
         }
 
         public static void Load()
         {
-            if (File.Exists(_filePath))
-            {
-                try
-                {
-                    var json = File.ReadAllText(_filePath);
-                    var list = JsonSerializer.Deserialize<List<string>>(json);
-                    if (list != null)
-                    {
-                        FavoritePaths = new HashSet<string>(list);
-                    }
-                }
-                catch { }
-            }
-        }
-
-        public static void Save()
-        {
-            try
-            {
-                var json = JsonSerializer.Serialize(FavoritePaths);
-                File.WriteAllText(_filePath, json);
-            }
-            catch { }
+            var list = DatabaseService.Conn.Table<FavoriteEntry>().ToList();
+            FavoritePaths = new HashSet<string>(list.Select(x => x.SongPath));
         }
 
         public static void Add(string path)
         {
             if (FavoritePaths.Add(path))
             {
-                Save();
+                DatabaseService.Conn.InsertOrReplace(new FavoriteEntry { SongPath = path });
             }
         }
 
@@ -55,13 +32,10 @@ namespace music4life.Services
         {
             if (FavoritePaths.Remove(path))
             {
-                Save();
+                DatabaseService.Conn.Delete<FavoriteEntry>(path);
             }
         }
 
-        public static bool IsFavorite(string path)
-        {
-            return FavoritePaths.Contains(path);
-        }
+        public static bool IsFavorite(string path) => FavoritePaths.Contains(path);
     }
 }
