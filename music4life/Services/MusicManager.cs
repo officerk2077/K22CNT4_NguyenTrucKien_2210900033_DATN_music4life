@@ -15,20 +15,15 @@ namespace music4life.Services
         public static async Task ScanMusic(List<string> folderPaths)
         {
             System.Windows.Application.Current.Dispatcher.Invoke(() => AllTracks.Clear());
-
             var tempSongs = new List<Song>();
-
             await Task.Run(() =>
             {
                 foreach (var folder in folderPaths)
                 {
                     if (!Directory.Exists(folder)) continue;
-
                     try
                     {
-                        var files = Directory.GetFiles(folder, "*.*", SearchOption.AllDirectories)
-                                             .Where(s => s.EndsWith(".mp3") || s.EndsWith(".flac") || s.EndsWith(".wav") || s.EndsWith(".m4a"));
-
+                        var files = Directory.GetFiles(folder, "*.*", SearchOption.AllDirectories).Where(s => s.EndsWith(".mp3") || s.EndsWith(".flac") || s.EndsWith(".wav") || s.EndsWith(".m4a"));
                         foreach (var file in files)
                         {
                             try
@@ -62,7 +57,6 @@ namespace music4life.Services
 
                                         CoverImage = null
                                     };
-
                                     tempSongs.Add(song);
                                 }
                             }
