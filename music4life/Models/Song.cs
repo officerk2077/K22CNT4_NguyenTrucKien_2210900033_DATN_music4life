@@ -1,7 +1,6 @@
 ﻿using music4life.ViewModels;
-using SQLite; // ✅ BẮT BUỘC PHẢI CÓ
+using SQLite;
 using System;
-using System.Windows.Media;
 
 namespace music4life.Models
 {
@@ -18,8 +17,7 @@ namespace music4life.Models
         public string Duration { get; set; }
         public DateTime DateAdded { get; set; }
         public string TechnicalInfo { get; set; }
-        [Ignore]
-        public ImageSource CoverImage { get; set; }
+
 
         private bool _isPlaying;
         [Ignore]

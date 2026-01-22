@@ -3,6 +3,114 @@
   "WorkspaceRootPath": "D:\\\u0110ATN\\music4life\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|d:\\\u0111atn\\music4life\\music4life\\views\\songlistview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|solutionrelative:music4life\\views\\songlistview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|d:\\\u0111atn\\music4life\\music4life\\views\\genresview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|solutionrelative:music4life\\views\\genresview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|d:\\\u0111atn\\music4life\\music4life\\views\\genredetailview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|solutionrelative:music4life\\views\\genredetailview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|d:\\\u0111atn\\music4life\\music4life\\views\\albumview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|solutionrelative:music4life\\views\\albumview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|d:\\\u0111atn\\music4life\\music4life\\views\\albumview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|solutionrelative:music4life\\views\\albumview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|d:\\\u0111atn\\music4life\\music4life\\services\\musicmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|solutionrelative:music4life\\services\\musicmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|d:\\\u0111atn\\music4life\\music4life\\converters\\albumartconverter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|solutionrelative:music4life\\converters\\albumartconverter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|d:\\\u0111atn\\music4life\\music4life\\models\\song.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|solutionrelative:music4life\\models\\song.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|d:\\\u0111atn\\music4life\\music4life\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|solutionrelative:music4life\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|d:\\\u0111atn\\music4life\\music4life\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|solutionrelative:music4life\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|d:\\\u0111atn\\music4life\\music4life\\views\\songlistview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|solutionrelative:music4life\\views\\songlistview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|d:\\\u0111atn\\music4life\\music4life\\views\\settingwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|solutionrelative:music4life\\views\\settingwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|d:\\\u0111atn\\music4life\\music4life\\views\\genredetailview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|solutionrelative:music4life\\views\\genredetailview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|d:\\\u0111atn\\music4life\\music4life\\views\\createplaylistwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|solutionrelative:music4life\\views\\createplaylistwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|d:\\\u0111atn\\music4life\\music4life\\views\\artistsview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|solutionrelative:music4life\\views\\artistsview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|d:\\\u0111atn\\music4life\\music4life\\viewmodels\\settingsviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|solutionrelative:music4life\\viewmodels\\settingsviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|d:\\\u0111atn\\music4life\\music4life\\viewmodels\\relaycommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|solutionrelative:music4life\\viewmodels\\relaycommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|d:\\\u0111atn\\music4life\\music4life\\viewmodels\\mainviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|solutionrelative:music4life\\viewmodels\\mainviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|d:\\\u0111atn\\music4life\\music4life\\viewmodels\\baseviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|solutionrelative:music4life\\viewmodels\\baseviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|d:\\\u0111atn\\music4life\\music4life\\services\\playlistservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|solutionrelative:music4life\\services\\playlistservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|d:\\\u0111atn\\music4life\\music4life\\services\\musicplayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|solutionrelative:music4life\\services\\musicplayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|d:\\\u0111atn\\music4life\\music4life\\services\\favoriteservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|solutionrelative:music4life\\services\\favoriteservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|d:\\\u0111atn\\music4life\\music4life\\services\\databaseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|solutionrelative:music4life\\services\\databaseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|d:\\\u0111atn\\music4life\\music4life\\helpers\\listextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|solutionrelative:music4life\\helpers\\listextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|d:\\\u0111atn\\music4life\\music4life\\models\\appsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|solutionrelative:music4life\\models\\appsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|d:\\\u0111atn\\music4life\\music4life\\models\\favoriteentry.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|solutionrelative:music4life\\models\\favoriteentry.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|d:\\\u0111atn\\music4life\\music4life\\models\\playlist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|solutionrelative:music4life\\models\\playlist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|d:\\\u0111atn\\music4life\\music4life\\models\\playlistentry.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|solutionrelative:music4life\\models\\playlistentry.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -11,60 +119,8 @@
       "RelativeMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|solutionrelative:music4life\\views\\createplaylistwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|d:\\\u0111atn\\music4life\\music4life\\views\\createplaylistwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|solutionrelative:music4life\\views\\createplaylistwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|d:\\\u0111atn\\music4life\\music4life\\views\\songlistview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|solutionrelative:music4life\\views\\songlistview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|d:\\\u0111atn\\music4life\\music4life\\services\\favoriteservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|solutionrelative:music4life\\services\\favoriteservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|d:\\\u0111atn\\music4life\\music4life\\services\\playlistservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|solutionrelative:music4life\\services\\playlistservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|d:\\\u0111atn\\music4life\\music4life\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|solutionrelative:music4life\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|d:\\\u0111atn\\music4life\\music4life\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|solutionrelative:music4life\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|d:\\\u0111atn\\music4life\\music4life\\models\\favoriteentry.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|solutionrelative:music4life\\models\\favoriteentry.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|d:\\\u0111atn\\music4life\\music4life\\models\\appsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|solutionrelative:music4life\\models\\appsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|d:\\\u0111atn\\music4life\\music4life\\services\\databaseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|solutionrelative:music4life\\services\\databaseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|d:\\\u0111atn\\music4life\\music4life\\models\\playlist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|solutionrelative:music4life\\models\\playlist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|d:\\\u0111atn\\music4life\\music4life\\viewmodels\\mainviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|solutionrelative:music4life\\viewmodels\\mainviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|d:\\\u0111atn\\music4life\\music4life\\views\\albumview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|solutionrelative:music4life\\views\\albumview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|d:\\\u0111atn\\music4life\\music4life\\services\\musicmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|solutionrelative:music4life\\services\\musicmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|d:\\\u0111atn\\music4life\\music4life\\models\\song.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8A615315-56C7-0C17-4C60-72CF2F220CCA}|music4life\\music4life.csproj|solutionrelative:music4life\\models\\song.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -74,7 +130,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 9,
           "Children": [
             {
               "$type": "Bookmark",
@@ -82,58 +138,102 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "PlaylistEntry.cs",
-              "DocumentMoniker": "D:\\\u0110ATN\\music4life\\music4life\\Models\\PlaylistEntry.cs",
-              "RelativeDocumentMoniker": "music4life\\Models\\PlaylistEntry.cs",
-              "ToolTip": "D:\\\u0110ATN\\music4life\\music4life\\Models\\PlaylistEntry.cs",
-              "RelativeToolTip": "music4life\\Models\\PlaylistEntry.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAABAAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "GenreDetailView.xaml",
+              "DocumentMoniker": "D:\\\u0110ATN\\music4life\\music4life\\Views\\GenreDetailView.xaml",
+              "RelativeDocumentMoniker": "music4life\\Views\\GenreDetailView.xaml",
+              "ToolTip": "D:\\\u0110ATN\\music4life\\music4life\\Views\\GenreDetailView.xaml",
+              "RelativeToolTip": "music4life\\Views\\GenreDetailView.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-01-21T17:09:51.433Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "AlbumArtConverter.cs",
+              "DocumentMoniker": "D:\\\u0110ATN\\music4life\\music4life\\Converters\\AlbumArtConverter.cs",
+              "RelativeDocumentMoniker": "music4life\\Converters\\AlbumArtConverter.cs",
+              "ToolTip": "D:\\\u0110ATN\\music4life\\music4life\\Converters\\AlbumArtConverter.cs",
+              "RelativeToolTip": "music4life\\Converters\\AlbumArtConverter.cs",
+              "ViewState": "AgIAAAQAAAAAAAAAAAAuwCIAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-21T14:21:40.321Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-21T16:36:23.526Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "CreatePlaylistWindow.xaml",
-              "DocumentMoniker": "D:\\\u0110ATN\\music4life\\music4life\\Views\\CreatePlaylistWindow.xaml",
-              "RelativeDocumentMoniker": "music4life\\Views\\CreatePlaylistWindow.xaml",
-              "ToolTip": "D:\\\u0110ATN\\music4life\\music4life\\Views\\CreatePlaylistWindow.xaml",
-              "RelativeToolTip": "music4life\\Views\\CreatePlaylistWindow.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-01-21T15:41:15.932Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "CreatePlaylistWindow.xaml.cs",
-              "DocumentMoniker": "D:\\\u0110ATN\\music4life\\music4life\\Views\\CreatePlaylistWindow.xaml.cs",
-              "RelativeDocumentMoniker": "music4life\\Views\\CreatePlaylistWindow.xaml.cs",
-              "ToolTip": "D:\\\u0110ATN\\music4life\\music4life\\Views\\CreatePlaylistWindow.xaml.cs",
-              "RelativeToolTip": "music4life\\Views\\CreatePlaylistWindow.xaml.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAJAAAAAAAAAA==",
+              "Title": "GenresView.xaml.cs",
+              "DocumentMoniker": "D:\\\u0110ATN\\music4life\\music4life\\Views\\GenresView.xaml.cs",
+              "RelativeDocumentMoniker": "music4life\\Views\\GenresView.xaml.cs",
+              "ToolTip": "D:\\\u0110ATN\\music4life\\music4life\\Views\\GenresView.xaml.cs",
+              "RelativeToolTip": "music4life\\Views\\GenresView.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAA+AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-21T15:41:17.791Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-21T16:10:07.949Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "MainWindow.xaml.cs",
-              "DocumentMoniker": "D:\\\u0110ATN\\music4life\\music4life\\MainWindow.xaml.cs",
-              "RelativeDocumentMoniker": "music4life\\MainWindow.xaml.cs",
-              "ToolTip": "D:\\\u0110ATN\\music4life\\music4life\\MainWindow.xaml.cs",
-              "RelativeToolTip": "music4life\\MainWindow.xaml.cs",
-              "ViewState": "AgIAAHwAAAAAAAAAAAAjwJIAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 12,
+              "Title": "GenreDetailView.xaml.cs",
+              "DocumentMoniker": "D:\\\u0110ATN\\music4life\\music4life\\Views\\GenreDetailView.xaml.cs",
+              "RelativeDocumentMoniker": "music4life\\Views\\GenreDetailView.xaml.cs",
+              "ToolTip": "D:\\\u0110ATN\\music4life\\music4life\\Views\\GenreDetailView.xaml.cs",
+              "RelativeToolTip": "music4life\\Views\\GenreDetailView.xaml.cs",
+              "ViewState": "AgIAABgAAAAAAAAAAAAowAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-21T15:01:18.92Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-21T16:09:56.071Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 14,
+              "Title": "ArtistsView.xaml.cs",
+              "DocumentMoniker": "D:\\\u0110ATN\\music4life\\music4life\\Views\\ArtistsView.xaml.cs",
+              "RelativeDocumentMoniker": "music4life\\Views\\ArtistsView.xaml.cs",
+              "ToolTip": "D:\\\u0110ATN\\music4life\\music4life\\Views\\ArtistsView.xaml.cs",
+              "RelativeToolTip": "music4life\\Views\\ArtistsView.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-21T16:09:51.569Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "MusicManager.cs",
+              "DocumentMoniker": "D:\\\u0110ATN\\music4life\\music4life\\Services\\MusicManager.cs",
+              "RelativeDocumentMoniker": "music4life\\Services\\MusicManager.cs",
+              "ToolTip": "D:\\\u0110ATN\\music4life\\music4life\\Services\\MusicManager.cs",
+              "RelativeToolTip": "music4life\\Services\\MusicManager.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-21T14:25:29.235Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "AlbumView.xaml.cs",
+              "DocumentMoniker": "D:\\\u0110ATN\\music4life\\music4life\\Views\\AlbumView.xaml.cs",
+              "RelativeDocumentMoniker": "music4life\\Views\\AlbumView.xaml.cs",
+              "ToolTip": "D:\\\u0110ATN\\music4life\\music4life\\Views\\AlbumView.xaml.cs",
+              "RelativeToolTip": "music4life\\Views\\AlbumView.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-21T16:09:48.981Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "SettingsViewModel.cs",
+              "DocumentMoniker": "D:\\\u0110ATN\\music4life\\music4life\\ViewModels\\SettingsViewModel.cs",
+              "RelativeDocumentMoniker": "music4life\\ViewModels\\SettingsViewModel.cs",
+              "ToolTip": "D:\\\u0110ATN\\music4life\\music4life\\ViewModels\\SettingsViewModel.cs",
+              "RelativeToolTip": "music4life\\ViewModels\\SettingsViewModel.cs",
+              "ViewState": "AgIAANoAAAAAAAAAAAAAAAEAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-21T15:40:50.862Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
               "Title": "SongListView.xaml",
               "DocumentMoniker": "D:\\\u0110ATN\\music4life\\music4life\\Views\\SongListView.xaml",
               "RelativeDocumentMoniker": "music4life\\Views\\SongListView.xaml",
@@ -145,109 +245,151 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "FavoriteService.cs",
-              "DocumentMoniker": "D:\\\u0110ATN\\music4life\\music4life\\Services\\FavoriteService.cs",
-              "RelativeDocumentMoniker": "music4life\\Services\\FavoriteService.cs",
-              "ToolTip": "D:\\\u0110ATN\\music4life\\music4life\\Services\\FavoriteService.cs",
-              "RelativeToolTip": "music4life\\Services\\FavoriteService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAoAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-21T14:26:10.356Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "PlaylistService.cs",
-              "DocumentMoniker": "D:\\\u0110ATN\\music4life\\music4life\\Services\\PlaylistService.cs",
-              "RelativeDocumentMoniker": "music4life\\Services\\PlaylistService.cs",
-              "ToolTip": "D:\\\u0110ATN\\music4life\\music4life\\Services\\PlaylistService.cs",
-              "RelativeToolTip": "music4life\\Services\\PlaylistService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAjAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-21T14:26:02.602Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "MainWindow.xaml",
-              "DocumentMoniker": "D:\\\u0110ATN\\music4life\\music4life\\MainWindow.xaml",
-              "RelativeDocumentMoniker": "music4life\\MainWindow.xaml",
-              "ToolTip": "D:\\\u0110ATN\\music4life\\music4life\\MainWindow.xaml",
-              "RelativeToolTip": "music4life\\MainWindow.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-01-21T10:18:14.67Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "MainViewModel.cs",
-              "DocumentMoniker": "D:\\\u0110ATN\\music4life\\music4life\\ViewModels\\MainViewModel.cs",
-              "RelativeDocumentMoniker": "music4life\\ViewModels\\MainViewModel.cs",
-              "ToolTip": "D:\\\u0110ATN\\music4life\\music4life\\ViewModels\\MainViewModel.cs",
-              "RelativeToolTip": "music4life\\ViewModels\\MainViewModel.cs",
-              "ViewState": "AgIAAGYBAAAAAAAAAAAmwJEBAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-21T15:01:58.02Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "AlbumView.xaml",
-              "DocumentMoniker": "D:\\\u0110ATN\\music4life\\music4life\\Views\\AlbumView.xaml",
-              "RelativeDocumentMoniker": "music4life\\Views\\AlbumView.xaml",
-              "ToolTip": "D:\\\u0110ATN\\music4life\\music4life\\Views\\AlbumView.xaml",
-              "RelativeToolTip": "music4life\\Views\\AlbumView.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-01-21T15:08:41.531Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "MusicManager.cs",
-              "DocumentMoniker": "D:\\\u0110ATN\\music4life\\music4life\\Services\\MusicManager.cs",
-              "RelativeDocumentMoniker": "music4life\\Services\\MusicManager.cs",
-              "ToolTip": "D:\\\u0110ATN\\music4life\\music4life\\Services\\MusicManager.cs",
-              "RelativeToolTip": "music4life\\Services\\MusicManager.cs",
-              "ViewState": "AgIAALoAAAAAAAAAAAAIwMkAAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-21T14:25:29.235Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 10,
-              "Title": "DatabaseService.cs",
-              "DocumentMoniker": "D:\\\u0110ATN\\music4life\\music4life\\Services\\DatabaseService.cs",
-              "RelativeDocumentMoniker": "music4life\\Services\\DatabaseService.cs",
-              "ToolTip": "D:\\\u0110ATN\\music4life\\music4life\\Services\\DatabaseService.cs",
-              "RelativeToolTip": "music4life\\Services\\DatabaseService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAJAAAAAAAAAA==",
+              "Title": "SongListView.xaml.cs",
+              "DocumentMoniker": "D:\\\u0110ATN\\music4life\\music4life\\Views\\SongListView.xaml.cs",
+              "RelativeDocumentMoniker": "music4life\\Views\\SongListView.xaml.cs",
+              "ToolTip": "D:\\\u0110ATN\\music4life\\music4life\\Views\\SongListView.xaml.cs",
+              "RelativeToolTip": "music4life\\Views\\SongListView.xaml.cs",
+              "ViewState": "AgIAADEAAAAAAAAAAAAgwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-21T14:25:02.971Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-21T16:10:11.883Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "AppSettings.cs",
-              "DocumentMoniker": "D:\\\u0110ATN\\music4life\\music4life\\Models\\AppSettings.cs",
-              "RelativeDocumentMoniker": "music4life\\Models\\AppSettings.cs",
-              "ToolTip": "D:\\\u0110ATN\\music4life\\music4life\\Models\\AppSettings.cs",
-              "RelativeToolTip": "music4life\\Models\\AppSettings.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAABRAAAAAAAAAA==",
+              "DocumentIndex": 11,
+              "Title": "SettingWindow.xaml.cs",
+              "DocumentMoniker": "D:\\\u0110ATN\\music4life\\music4life\\Views\\SettingWindow.xaml.cs",
+              "RelativeDocumentMoniker": "music4life\\Views\\SettingWindow.xaml.cs",
+              "ToolTip": "D:\\\u0110ATN\\music4life\\music4life\\Views\\SettingWindow.xaml.cs",
+              "RelativeToolTip": "music4life\\Views\\SettingWindow.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-21T14:24:43.04Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-21T16:10:09.793Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 8,
+              "Title": "MainWindow.xaml.cs",
+              "DocumentMoniker": "D:\\\u0110ATN\\music4life\\music4life\\MainWindow.xaml.cs",
+              "RelativeDocumentMoniker": "music4life\\MainWindow.xaml.cs",
+              "ToolTip": "D:\\\u0110ATN\\music4life\\music4life\\MainWindow.xaml.cs",
+              "RelativeToolTip": "music4life\\MainWindow.xaml.cs",
+              "ViewState": "AgIAAKgAAAAAAAAAAAAgwLIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-21T15:01:18.92Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Song.cs",
+              "DocumentMoniker": "D:\\\u0110ATN\\music4life\\music4life\\Models\\Song.cs",
+              "RelativeDocumentMoniker": "music4life\\Models\\Song.cs",
+              "ToolTip": "D:\\\u0110ATN\\music4life\\music4life\\Models\\Song.cs",
+              "RelativeToolTip": "music4life\\Models\\Song.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABUAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-21T14:18:34.031Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "App.xaml.cs",
+              "DocumentMoniker": "D:\\\u0110ATN\\music4life\\music4life\\App.xaml.cs",
+              "RelativeDocumentMoniker": "music4life\\App.xaml.cs",
+              "ToolTip": "D:\\\u0110ATN\\music4life\\music4life\\App.xaml.cs",
+              "RelativeToolTip": "music4life\\App.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-21T16:10:13.726Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "RelayCommand.cs",
+              "DocumentMoniker": "D:\\\u0110ATN\\music4life\\music4life\\ViewModels\\RelayCommand.cs",
+              "RelativeDocumentMoniker": "music4life\\ViewModels\\RelayCommand.cs",
+              "ToolTip": "D:\\\u0110ATN\\music4life\\music4life\\ViewModels\\RelayCommand.cs",
+              "RelativeToolTip": "music4life\\ViewModels\\RelayCommand.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-21T16:09:40.066Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "BaseViewModel.cs",
+              "DocumentMoniker": "D:\\\u0110ATN\\music4life\\music4life\\ViewModels\\BaseViewModel.cs",
+              "RelativeDocumentMoniker": "music4life\\ViewModels\\BaseViewModel.cs",
+              "ToolTip": "D:\\\u0110ATN\\music4life\\music4life\\ViewModels\\BaseViewModel.cs",
+              "RelativeToolTip": "music4life\\ViewModels\\BaseViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-21T16:09:11.614Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "MusicPlayer.cs",
+              "DocumentMoniker": "D:\\\u0110ATN\\music4life\\music4life\\Services\\MusicPlayer.cs",
+              "RelativeDocumentMoniker": "music4life\\Services\\MusicPlayer.cs",
+              "ToolTip": "D:\\\u0110ATN\\music4life\\music4life\\Services\\MusicPlayer.cs",
+              "RelativeToolTip": "music4life\\Services\\MusicPlayer.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-21T16:09:07.605Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "ListExtensions.cs",
+              "DocumentMoniker": "D:\\\u0110ATN\\music4life\\music4life\\Helpers\\ListExtensions.cs",
+              "RelativeDocumentMoniker": "music4life\\Helpers\\ListExtensions.cs",
+              "ToolTip": "D:\\\u0110ATN\\music4life\\music4life\\Helpers\\ListExtensions.cs",
+              "RelativeToolTip": "music4life\\Helpers\\ListExtensions.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-21T16:09:04.372Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "Playlist.cs",
+              "DocumentMoniker": "D:\\\u0110ATN\\music4life\\music4life\\Models\\Playlist.cs",
+              "RelativeDocumentMoniker": "music4life\\Models\\Playlist.cs",
+              "ToolTip": "D:\\\u0110ATN\\music4life\\music4life\\Models\\Playlist.cs",
+              "RelativeToolTip": "music4life\\Models\\Playlist.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAwwBkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-21T14:21:17.321Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "CreatePlaylistWindow.xaml.cs",
+              "DocumentMoniker": "D:\\\u0110ATN\\music4life\\music4life\\Views\\CreatePlaylistWindow.xaml.cs",
+              "RelativeDocumentMoniker": "music4life\\Views\\CreatePlaylistWindow.xaml.cs",
+              "ToolTip": "D:\\\u0110ATN\\music4life\\music4life\\Views\\CreatePlaylistWindow.xaml.cs",
+              "RelativeToolTip": "music4life\\Views\\CreatePlaylistWindow.xaml.cs",
+              "ViewState": "AgIAABoAAAAAAAAAAAAwwA0AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-21T15:41:17.791Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "PlaylistEntry.cs",
+              "DocumentMoniker": "D:\\\u0110ATN\\music4life\\music4life\\Models\\PlaylistEntry.cs",
+              "RelativeDocumentMoniker": "music4life\\Models\\PlaylistEntry.cs",
+              "ToolTip": "D:\\\u0110ATN\\music4life\\music4life\\Models\\PlaylistEntry.cs",
+              "RelativeToolTip": "music4life\\Models\\PlaylistEntry.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-21T14:21:40.321Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
               "Title": "FavoriteEntry.cs",
               "DocumentMoniker": "D:\\\u0110ATN\\music4life\\music4life\\Models\\FavoriteEntry.cs",
               "RelativeDocumentMoniker": "music4life\\Models\\FavoriteEntry.cs",
@@ -255,34 +397,100 @@
               "RelativeToolTip": "music4life\\Models\\FavoriteEntry.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-21T14:22:42.277Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-21T14:22:42.277Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "Playlist.cs",
-              "DocumentMoniker": "D:\\\u0110ATN\\music4life\\music4life\\Models\\Playlist.cs",
-              "RelativeDocumentMoniker": "music4life\\Models\\Playlist.cs",
-              "ToolTip": "D:\\\u0110ATN\\music4life\\music4life\\Models\\Playlist.cs",
-              "RelativeToolTip": "music4life\\Models\\Playlist.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAwwCAAAAABAAAAAAAAAA==",
+              "DocumentIndex": 22,
+              "Title": "DatabaseService.cs",
+              "DocumentMoniker": "D:\\\u0110ATN\\music4life\\music4life\\Services\\DatabaseService.cs",
+              "RelativeDocumentMoniker": "music4life\\Services\\DatabaseService.cs",
+              "ToolTip": "D:\\\u0110ATN\\music4life\\music4life\\Services\\DatabaseService.cs",
+              "RelativeToolTip": "music4life\\Services\\DatabaseService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-21T14:21:17.321Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-21T14:25:02.971Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "Song.cs",
-              "DocumentMoniker": "D:\\\u0110ATN\\music4life\\music4life\\Models\\Song.cs",
-              "RelativeDocumentMoniker": "music4life\\Models\\Song.cs",
-              "ToolTip": "D:\\\u0110ATN\\music4life\\music4life\\Models\\Song.cs",
-              "RelativeToolTip": "music4life\\Models\\Song.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAgwBUAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 21,
+              "Title": "FavoriteService.cs",
+              "DocumentMoniker": "D:\\\u0110ATN\\music4life\\music4life\\Services\\FavoriteService.cs",
+              "RelativeDocumentMoniker": "music4life\\Services\\FavoriteService.cs",
+              "ToolTip": "D:\\\u0110ATN\\music4life\\music4life\\Services\\FavoriteService.cs",
+              "RelativeToolTip": "music4life\\Services\\FavoriteService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-21T14:18:34.031Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-21T14:26:10.356Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "MainViewModel.cs",
+              "DocumentMoniker": "D:\\\u0110ATN\\music4life\\music4life\\ViewModels\\MainViewModel.cs",
+              "RelativeDocumentMoniker": "music4life\\ViewModels\\MainViewModel.cs",
+              "ToolTip": "D:\\\u0110ATN\\music4life\\music4life\\ViewModels\\MainViewModel.cs",
+              "RelativeToolTip": "music4life\\ViewModels\\MainViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-21T15:01:58.02Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "PlaylistService.cs",
+              "DocumentMoniker": "D:\\\u0110ATN\\music4life\\music4life\\Services\\PlaylistService.cs",
+              "RelativeDocumentMoniker": "music4life\\Services\\PlaylistService.cs",
+              "ToolTip": "D:\\\u0110ATN\\music4life\\music4life\\Services\\PlaylistService.cs",
+              "RelativeToolTip": "music4life\\Services\\PlaylistService.cs",
+              "ViewState": "AgIAAD8AAAAAAAAAAAAmwAwAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-21T14:26:02.602Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "CreatePlaylistWindow.xaml",
+              "DocumentMoniker": "D:\\\u0110ATN\\music4life\\music4life\\Views\\CreatePlaylistWindow.xaml",
+              "RelativeDocumentMoniker": "music4life\\Views\\CreatePlaylistWindow.xaml",
+              "ToolTip": "D:\\\u0110ATN\\music4life\\music4life\\Views\\CreatePlaylistWindow.xaml",
+              "RelativeToolTip": "music4life\\Views\\CreatePlaylistWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-01-21T15:41:15.932Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "MainWindow.xaml",
+              "DocumentMoniker": "D:\\\u0110ATN\\music4life\\music4life\\MainWindow.xaml",
+              "RelativeDocumentMoniker": "music4life\\MainWindow.xaml",
+              "ToolTip": "D:\\\u0110ATN\\music4life\\music4life\\MainWindow.xaml",
+              "RelativeToolTip": "music4life\\MainWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-01-21T10:18:14.67Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "AppSettings.cs",
+              "DocumentMoniker": "D:\\\u0110ATN\\music4life\\music4life\\Models\\AppSettings.cs",
+              "RelativeDocumentMoniker": "music4life\\Models\\AppSettings.cs",
+              "ToolTip": "D:\\\u0110ATN\\music4life\\music4life\\Models\\AppSettings.cs",
+              "RelativeToolTip": "music4life\\Models\\AppSettings.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAABRAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-21T14:24:43.04Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AlbumView.xaml",
+              "DocumentMoniker": "D:\\\u0110ATN\\music4life\\music4life\\Views\\AlbumView.xaml",
+              "RelativeDocumentMoniker": "music4life\\Views\\AlbumView.xaml",
+              "ToolTip": "D:\\\u0110ATN\\music4life\\music4life\\Views\\AlbumView.xaml",
+              "RelativeToolTip": "music4life\\Views\\AlbumView.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-01-21T15:08:41.531Z"
             }
           ]
         }
