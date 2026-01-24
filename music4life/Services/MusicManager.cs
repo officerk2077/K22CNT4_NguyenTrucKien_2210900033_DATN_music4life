@@ -16,86 +16,101 @@ namespace music4life.Services
         {
             DatabaseService.Init();
 
-            // Load danh sách cũ từ DB lên UI trước để người dùng không phải chờ
             var cachedSongs = DatabaseService.Conn.Table<Song>().ToList();
+
+            var dbMap = cachedSongs.ToDictionary(s => s.FilePath, s => s);
+
             System.Windows.Application.Current.Dispatcher.Invoke(() =>
             {
                 AllTracks.Clear();
                 foreach (var s in cachedSongs) AllTracks.Add(s);
             });
 
-            // Chạy task quét nhạc ngầm
             await Task.Run(() =>
             {
-                var newSongsBuffer = new List<Song>();
+                var filesToProcess = new List<string>();
                 var allFoundPaths = new HashSet<string>();
 
-                DatabaseService.Conn.RunInTransaction(() =>
+                foreach (var folder in folderPaths)
                 {
-                    foreach (var folder in folderPaths)
+                    if (Directory.Exists(folder))
                     {
-                        if (!Directory.Exists(folder)) continue;
-
                         var files = GetFilesSafe(folder);
-
                         foreach (var file in files)
                         {
                             allFoundPaths.Add(file);
 
-                            var existing = DatabaseService.Conn.Find<Song>(file);
-
-                            // --- LOGIC MỚI: Kiểm tra xem có cần quét lại không ---
-                            // 1. Nếu bài hát chưa có trong DB (existing == null) -> Quét mới
-                            // 2. Nếu bài hát đã có nhưng thông tin kỹ thuật chưa chứa dấu "|" (tức là format cũ) -> Quét lại
-                            bool needsUpdate = existing == null || string.IsNullOrEmpty(existing.TechnicalInfo) || !existing.TechnicalInfo.Contains("|");
+                            bool needsUpdate = true;
+                            if (dbMap.TryGetValue(file, out var existing))
+                            {
+                                if (!string.IsNullOrEmpty(existing.TechnicalInfo) && existing.TechnicalInfo.Contains("|"))
+                                {
+                                    needsUpdate = false;
+                                }
+                            }
 
                             if (needsUpdate)
                             {
-                                try
-                                {
-                                    Song song = null;
-                                    try
-                                    {
-                                        using (var tfile = TagLib.File.Create(file))
-                                        {
-                                            song = CreateSongFromTag(file, tfile);
-                                        }
-                                    }
-                                    catch
-                                    {
-                                        song = CreateSongFromFileInfo(file);
-                                    }
-
-                                    if (song != null)
-                                    {
-                                        // InsertOrReplace: Nếu chưa có thì thêm, có rồi thì cập nhật
-                                        DatabaseService.Conn.InsertOrReplace(song);
-                                        newSongsBuffer.Add(song);
-                                    }
-                                }
-                                catch { }
+                                filesToProcess.Add(file);
                             }
                         }
                     }
-                });
-
-                // Xóa các bài hát không còn tồn tại trong ổ cứng
-                foreach (var cached in cachedSongs)
-                {
-                    if (!allFoundPaths.Contains(cached.FilePath))
-                    {
-                        DatabaseService.Conn.Delete<Song>(cached.FilePath);
-                    }
                 }
 
-                // Nếu có sự thay đổi (có bài mới, bài cập nhật, hoặc bài bị xóa) thì refresh lại UI
-                if (newSongsBuffer.Count > 0 || cachedSongs.Count != allFoundPaths.Count)
+                var newSongsBag = new System.Collections.Concurrent.ConcurrentBag<Song>();
+
+                Parallel.ForEach(filesToProcess, new ParallelOptions { MaxDegreeOfParallelism = Environment.ProcessorCount }, (file) =>
                 {
+                    try
+                    {
+                        Song song = null;
+                        try
+                        {
+                            using (var tfile = TagLib.File.Create(file))
+                            {
+                                song = CreateSongFromTag(file, tfile);
+                            }
+                        }
+                        catch
+                        {
+                            song = CreateSongFromFileInfo(file);
+                        }
+
+                        if (song != null)
+                        {
+                            newSongsBag.Add(song);
+                        }
+                    }
+                    catch { }
+                });
+
+                if (!newSongsBag.IsEmpty || cachedSongs.Count != allFoundPaths.Count)
+                {
+                    DatabaseService.Conn.RunInTransaction(() =>
+                    {
+                        foreach (var song in newSongsBag)
+                        {
+                            DatabaseService.Conn.InsertOrReplace(song);
+                        }
+
+                        foreach (var cached in cachedSongs)
+                        {
+                            if (!allFoundPaths.Contains(cached.FilePath))
+                            {
+                                DatabaseService.Conn.Delete<Song>(cached.FilePath);
+                            }
+                        }
+                    });
+
                     System.Windows.Application.Current.Dispatcher.Invoke(() =>
                     {
                         var finalList = DatabaseService.Conn.Table<Song>().OrderBy(s => s.Title).ToList();
-                        AllTracks.Clear();
-                        foreach (var s in finalList) AllTracks.Add(s);
+
+                        if (finalList.Count != AllTracks.Count || !newSongsBag.IsEmpty)
+                        {
+                            AllTracks.Clear();
+                            foreach (var s in finalList) AllTracks.Add(s);
+                        }
                     });
                 }
             });

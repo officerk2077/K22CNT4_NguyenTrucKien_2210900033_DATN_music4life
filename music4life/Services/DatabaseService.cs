@@ -9,12 +9,15 @@ namespace music4life.Services
     {
         public static SQLiteConnection Conn { get; private set; }
 
+        public static string DbPath { get; private set; }
+
         public static void Init()
         {
             if (Conn != null) return;
 
-            var dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "music4life.db");
-            Conn = new SQLiteConnection(dbPath);
+            DbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "music4life.db");
+
+            Conn = new SQLiteConnection(DbPath);
 
             Conn.CreateTable<Song>();
             Conn.CreateTable<Playlist>();

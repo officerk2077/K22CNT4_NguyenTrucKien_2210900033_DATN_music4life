@@ -12,9 +12,42 @@ using System.Windows.Media.Imaging;
 
 namespace music4life.ViewModels
 {
-    public class AlbumInfo { public string Title { get; set; } public string Artist { get; set; } public int SongCount { get; set; } public ImageSource AlbumCover { get; set; } }
-    public class ArtistInfo { public string Name { get; set; } public int SongCount { get; set; } public string SongCountText => $"{SongCount} bài hát"; public ImageSource ArtistImage { get; set; } }
-    public class GenreInfo { public string Name { get; set; } public int SongCount { get; set; } public string SongCountText => $"{SongCount} bài hát"; }
+    public class AlbumInfo : BaseViewModel
+    {
+        public string Title { get; set; }
+        public string Artist { get; set; }
+        public int SongCount { get; set; }
+        public string FirstSongPath { get; set; }
+
+        private ImageSource _albumCover;
+        public ImageSource AlbumCover
+        {
+            get => _albumCover;
+            set { _albumCover = value; OnPropertyChanged(); }
+        }
+    }
+
+    public class ArtistInfo : BaseViewModel
+    {
+        public string Name { get; set; }
+        public int SongCount { get; set; }
+        public string SongCountText => $"{SongCount} bài hát";
+        public string FirstSongPath { get; set; }
+
+        private ImageSource _artistImage;
+        public ImageSource ArtistImage
+        {
+            get => _artistImage;
+            set { _artistImage = value; OnPropertyChanged(); }
+        }
+    }
+
+    public class GenreInfo
+    {
+        public string Name { get; set; }
+        public int SongCount { get; set; }
+        public string SongCountText => $"{SongCount} bài hát";
+    }
 
     public class MainViewModel : BaseViewModel
     {
@@ -22,6 +55,10 @@ namespace music4life.ViewModels
         private bool _isViewingFavorites = false;
         private Song _lastPlayingSong;
         private string _currentSortType = "";
+
+        private bool _isAlbumsLoaded = false;
+        private bool _isArtistsLoaded = false;
+        private bool _isGenresLoaded = false;
 
         private Song _songInSidebar;
         public Song SongInSidebar { get => _songInSidebar; set { _songInSidebar = value; OnPropertyChanged(); } }
@@ -83,7 +120,6 @@ namespace music4life.ViewModels
         private string _songYear; public string SongYear { get => _songYear; set { _songYear = value; OnPropertyChanged(); } }
         private string _songTechInfo; public string SongTechInfo { get => _songTechInfo; set { _songTechInfo = value; OnPropertyChanged(); } }
 
-        // Commands
         public ICommand PlayPauseCommand { get; set; }
         public ICommand NextCommand { get; set; }
         public ICommand PreviousCommand { get; set; }
@@ -102,8 +138,6 @@ namespace music4life.ViewModels
         public ICommand AddSongToPlaylistCommand { get; set; }
         public ICommand OpenPlaylistCommand { get; set; }
         public ICommand DeletePlaylistCommand { get; set; }
-
-        // ✅ THÊM MỚI: Command đổi tên playlist
         public ICommand RenamePlaylistCommand { get; set; }
 
         public MainViewModel()
@@ -146,7 +180,12 @@ namespace music4life.ViewModels
                     {
                         var ms = new MemoryStream(pic.Data.Data);
                         var bitmap = new BitmapImage();
-                        bitmap.BeginInit(); bitmap.StreamSource = ms; bitmap.DecodePixelWidth = 200; bitmap.CacheOption = BitmapCacheOption.OnLoad; bitmap.EndInit(); bitmap.Freeze();
+                        bitmap.BeginInit();
+                        bitmap.StreamSource = ms;
+                        bitmap.DecodePixelWidth = 250;
+                        bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                        bitmap.EndInit();
+                        bitmap.Freeze();
                         return bitmap;
                     }
                 }
@@ -292,73 +331,103 @@ namespace music4life.ViewModels
         public void RefreshData(List<Song> newSongs)
         {
             if (newSongs == null) return;
+
+            _isAlbumsLoaded = false;
+            _isArtistsLoaded = false;
+            _isGenresLoaded = false;
+
+            AlbumList.Clear();
+            ArtistList.Clear();
+            GenreList.Clear();
+
             _isViewingFavorites = false;
+
             foreach (var song in newSongs)
             {
                 if (FavoriteService.IsFavorite(song.FilePath)) song.IsFavorite = true;
             }
+
             AllSongs = new ObservableCollection<Song>(newSongs);
             DisplayedTracks = new ObservableCollection<Song>(newSongs);
             TotalSongs = DisplayedTracks.Count;
 
             if (!string.IsNullOrEmpty(_currentSortType)) ApplySort(_currentSortType);
+
+            LoadAlbumsAsync();
+            LoadArtistsAsync();
+            LoadGenresAsync();
         }
 
-        public async void LoadAlbumsAsync()
+        public void LoadAlbumsAsync()
         {
-            if (AlbumList != null && AlbumList.Count > 0) return;
+            if (_isAlbumsLoaded && AlbumList != null && AlbumList.Count > 0) return;
 
-            await Task.Run(() =>
+            var groups = AllSongs.GroupBy(s => s.Album).Select(g =>
             {
-                if (AllSongs == null || AllSongs.Count == 0) return;
-
-                var groups = AllSongs.GroupBy(s => s.Album).Select(g =>
+                string artistName = g.FirstOrDefault()?.Artist ?? "Unknown Artist";
+                string albumTitle = string.IsNullOrWhiteSpace(g.Key) ? "Unknown Album" : g.Key;
+                return new AlbumInfo
                 {
-                    var firstSong = g.FirstOrDefault();
-                    ImageSource cover = null;
-                    string artistName = "Unknown Artist";
-                    if (firstSong != null)
+                    Title = albumTitle,
+                    Artist = artistName,
+                    SongCount = g.Count(),
+                    FirstSongPath = g.First().FilePath
+                };
+            }).OrderBy(a => a.Title).ToList();
+
+            AlbumList = new ObservableCollection<AlbumInfo>(groups);
+            _isAlbumsLoaded = true;
+
+            Task.Run(() =>
+            {
+                foreach (var album in groups)
+                {
+                    if (album.AlbumCover != null) continue;
+
+                    var img = GetSongCover(album.FirstSongPath);
+                    if (img != null)
                     {
-                        cover = GetSongCover(firstSong.FilePath);
-                        artistName = firstSong.Artist;
+                        album.AlbumCover = img;
                     }
-                    string albumTitle = string.IsNullOrWhiteSpace(g.Key) ? "Unknown Album" : g.Key;
-                    return new AlbumInfo { Title = albumTitle, Artist = artistName, SongCount = g.Count(), AlbumCover = cover };
-                }).OrderBy(a => a.Title).ToList();
-
-                System.Windows.Application.Current.Dispatcher.Invoke(() =>
-                {
-                    AlbumList = new ObservableCollection<AlbumInfo>(groups);
-                });
+                }
             });
         }
 
-        public async void LoadArtistsAsync()
+        public void LoadArtistsAsync()
         {
-            if (ArtistList != null && ArtistList.Count > 0) return;
+            if (_isArtistsLoaded && ArtistList != null && ArtistList.Count > 0) return;
 
-            await Task.Run(() =>
+            var groups = AllSongs.GroupBy(s => s.Artist).Select(g =>
             {
-                if (AllSongs == null || AllSongs.Count == 0) return;
-
-                var groups = AllSongs.GroupBy(s => s.Artist).Select(g =>
+                return new ArtistInfo
                 {
-                    var firstSong = g.FirstOrDefault();
-                    ImageSource avatar = null;
-                    if (firstSong != null) avatar = GetSongCover(firstSong.FilePath);
-                    return new ArtistInfo { Name = g.Key, SongCount = g.Count(), ArtistImage = avatar };
-                }).OrderBy(a => a.Name).ToList();
+                    Name = g.Key,
+                    SongCount = g.Count(),
+                    FirstSongPath = g.First().FilePath
+                };
+            }).OrderBy(a => a.Name).ToList();
 
-                System.Windows.Application.Current.Dispatcher.Invoke(() =>
+            ArtistList = new ObservableCollection<ArtistInfo>(groups);
+            _isArtistsLoaded = true;
+
+            Task.Run(() =>
+            {
+                foreach (var artist in groups)
                 {
-                    ArtistList = new ObservableCollection<ArtistInfo>(groups);
-                });
+                    if (artist.ArtistImage != null) continue;
+
+                    var img = GetSongCover(artist.FirstSongPath);
+                    if (img != null)
+                    {
+                        artist.ArtistImage = img;
+                    }
+                }
             });
         }
 
         public async void LoadGenresAsync()
         {
-            if (GenreList != null && GenreList.Count > 0) return;
+            if (_isGenresLoaded && GenreList != null && GenreList.Count > 0) return;
 
             await Task.Run(() =>
             {
@@ -373,6 +442,7 @@ namespace music4life.ViewModels
                 System.Windows.Application.Current.Dispatcher.Invoke(() =>
                 {
                     GenreList = new ObservableCollection<GenreInfo>(groups);
+                    _isGenresLoaded = true;
                 });
             });
         }
