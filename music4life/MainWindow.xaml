@@ -9,8 +9,8 @@
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
         ResizeMode="CanResize"
-        Background="{StaticResource Brush.Bg.Main}">
-
+        Background="{StaticResource Brush.Bg.Main}"
+        Icon="/Assets/music4life.ico">
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="0" 
                       ResizeBorderThickness="5" 
@@ -353,30 +353,30 @@
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <Button Style="{StaticResource SidebarBtnStyle}" 
-                Command="{Binding DataContext.OpenPlaylistCommand, RelativeSource={RelativeSource AncestorType=Window}}"
-                CommandParameter="{Binding}"
-                Tag="{Binding DataContext, RelativeSource={RelativeSource AncestorType=Window}}">
+                                                Command="{Binding DataContext.OpenPlaylistCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                CommandParameter="{Binding}"
+                                                Tag="{Binding DataContext, RelativeSource={RelativeSource AncestorType=Window}}">
 
                                             <Button.ContextMenu>
                                                 <ContextMenu Style="{DynamicResource DarkContextMenuStyle}">
                                                     <MenuItem Header="Đổi tên" 
-                                                      Foreground="#E0E0E0"
-                                                      Style="{DynamicResource DarkMenuItemStyle}"
-                                                      Command="{Binding PlacementTarget.Tag.RenamePlaylistCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
-                                                      CommandParameter="{Binding}"/>
+                                                              Foreground="#E0E0E0"
+                                                              Style="{DynamicResource DarkMenuItemStyle}"
+                                                              Command="{Binding PlacementTarget.Tag.RenamePlaylistCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
+                                                              CommandParameter="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
 
                                                     <MenuItem Header="Xóa Playlist" 
-                                                      Foreground="#FF5555"
-                                                      Style="{DynamicResource DarkMenuItemStyle}"
-                                                      Command="{Binding PlacementTarget.Tag.DeletePlaylistCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
-                                                      CommandParameter="{Binding}"/>
+                                                              Foreground="#FF5555"
+                                                              Style="{DynamicResource DarkMenuItemStyle}"
+                                                              Command="{Binding PlacementTarget.Tag.DeletePlaylistCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
+                                                              CommandParameter="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
                                                 </ContextMenu>
                                             </Button.ContextMenu>
 
                                             <StackPanel Orientation="Horizontal">
                                                 <Path Data="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M15,13H13V15H11V13H9V11H11V9H13V11H15V13Z" 
-                                                  Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" 
-                                                  Width="14" Height="14" Stretch="Uniform" Margin="0,0,15,0" Opacity="0.7"/>
+                                                      Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" 
+                                                      Width="14" Height="14" Stretch="Uniform" Margin="0,0,15,0" Opacity="0.7"/>
 
                                                 <TextBlock Text="{Binding Name}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
                                             </StackPanel>
@@ -491,15 +491,15 @@
                 </Border>
 
                 <GridSplitter Grid.Row="1" 
-                              Height="8" 
-                              HorizontalAlignment="Stretch" 
-                              VerticalAlignment="Stretch" 
-                              ResizeDirection="Rows" 
-                              ResizeBehavior="PreviousAndNext"
-                              Background="Transparent" 
-                              Cursor="SizeNS"
-                              ShowsPreview="False"
-                              Panel.ZIndex="10"/>
+                             Height="8" 
+                             HorizontalAlignment="Stretch" 
+                             VerticalAlignment="Stretch" 
+                             ResizeDirection="Rows" 
+                             ResizeBehavior="PreviousAndNext"
+                             Background="Transparent" 
+                             Cursor="SizeNS"
+                             ShowsPreview="False"
+                             Panel.ZIndex="10"/>
 
                 <Border Grid.Row="1" Height="2" Width="40" Background="#444" CornerRadius="1" IsHitTestVisible="False"/>
 
