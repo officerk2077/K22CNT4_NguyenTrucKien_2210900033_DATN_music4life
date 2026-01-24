@@ -185,7 +185,6 @@ D:\ĐATN\music4life\music4life\obj\Debug\net8.0-windows\music4life.csproj.Assemb
 D:\ĐATN\music4life\music4life\obj\Debug\net8.0-windows\Views\AlbumView.baml
 D:\ĐATN\music4life\music4life\obj\Debug\net8.0-windows\Views\ArtistsView.baml
 D:\ĐATN\music4life\music4life\obj\Debug\net8.0-windows\Views\CreatePlaylistWindow.baml
-D:\ĐATN\music4life\music4life\obj\Debug\net8.0-windows\Views\GenreDetailView.baml
 D:\ĐATN\music4life\music4life\obj\Debug\net8.0-windows\Views\GenresView.baml
 D:\ĐATN\music4life\music4life\obj\Debug\net8.0-windows\Views\SettingWindow.baml
 D:\ĐATN\music4life\music4life\obj\Debug\net8.0-windows\Views\SongListView.baml
@@ -193,7 +192,6 @@ D:\ĐATN\music4life\music4life\obj\Debug\net8.0-windows\MainWindow.g.cs
 D:\ĐATN\music4life\music4life\obj\Debug\net8.0-windows\Views\AlbumView.g.cs
 D:\ĐATN\music4life\music4life\obj\Debug\net8.0-windows\Views\ArtistsView.g.cs
 D:\ĐATN\music4life\music4life\obj\Debug\net8.0-windows\Views\CreatePlaylistWindow.g.cs
-D:\ĐATN\music4life\music4life\obj\Debug\net8.0-windows\Views\GenreDetailView.g.cs
 D:\ĐATN\music4life\music4life\obj\Debug\net8.0-windows\Views\GenresView.g.cs
 D:\ĐATN\music4life\music4life\obj\Debug\net8.0-windows\Views\SettingWindow.g.cs
 D:\ĐATN\music4life\music4life\obj\Debug\net8.0-windows\Views\SongListView.g.cs

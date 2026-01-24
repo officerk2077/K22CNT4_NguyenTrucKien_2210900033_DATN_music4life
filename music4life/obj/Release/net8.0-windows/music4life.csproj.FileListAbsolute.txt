@@ -78,14 +78,12 @@ D:\ĐATN\music4life\music4life\obj\Release\net8.0-windows\music4life.csproj.Asse
 D:\ĐATN\music4life\music4life\obj\Release\net8.0-windows\MainWindow.baml
 D:\ĐATN\music4life\music4life\obj\Release\net8.0-windows\Views\AlbumView.baml
 D:\ĐATN\music4life\music4life\obj\Release\net8.0-windows\Views\CreatePlaylistWindow.baml
-D:\ĐATN\music4life\music4life\obj\Release\net8.0-windows\Views\GenreDetailView.baml
 D:\ĐATN\music4life\music4life\obj\Release\net8.0-windows\Views\GenresView.baml
 D:\ĐATN\music4life\music4life\obj\Release\net8.0-windows\Views\SettingWindow.baml
 D:\ĐATN\music4life\music4life\obj\Release\net8.0-windows\Views\SongListView.baml
 D:\ĐATN\music4life\music4life\obj\Release\net8.0-windows\MainWindow.g.cs
 D:\ĐATN\music4life\music4life\obj\Release\net8.0-windows\Views\AlbumView.g.cs
 D:\ĐATN\music4life\music4life\obj\Release\net8.0-windows\Views\CreatePlaylistWindow.g.cs
-D:\ĐATN\music4life\music4life\obj\Release\net8.0-windows\Views\GenreDetailView.g.cs
 D:\ĐATN\music4life\music4life\obj\Release\net8.0-windows\Views\GenresView.g.cs
 D:\ĐATN\music4life\music4life\obj\Release\net8.0-windows\Views\SettingWindow.g.cs
 D:\ĐATN\music4life\music4life\obj\Release\net8.0-windows\Views\SongListView.g.cs

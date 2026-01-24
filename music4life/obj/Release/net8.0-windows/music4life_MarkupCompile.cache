@@ -10,11 +10,11 @@ none
 false
 TRACE;RELEASE;NET;NET8_0;NETCOREAPP;WINDOWS;WINDOWS7_0;NET5_0_OR_GREATER;NET6_0_OR_GREATER;NET7_0_OR_GREATER;NET8_0_OR_GREATER;NETCOREAPP3_0_OR_GREATER;NETCOREAPP3_1_OR_GREATER;WINDOWS7_0_OR_GREATER
 D:\ĐATN\music4life\music4life\App.xaml
-81871620524
+7587564232
 
-26-337209366
+261108555402
 256-1115559677
-MainWindow.xaml;Views\AlbumView.xaml;Views\ArtistsView.xaml;Views\CreatePlaylistWindow.xaml;Views\GenreDetailView.xaml;Views\GenresView.xaml;Views\SettingWindow.xaml;Views\SongListView.xaml;
+MainWindow.xaml;Views\AlbumView.xaml;Views\ArtistsView.xaml;Views\CreatePlaylistWindow.xaml;Views\GenresView.xaml;Views\SettingWindow.xaml;Views\SongListView.xaml;
 
 False
 

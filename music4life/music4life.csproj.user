@@ -13,9 +13,6 @@
     <Compile Update="Views\CreatePlaylistWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\GenreDetailView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="Views\GenresView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
