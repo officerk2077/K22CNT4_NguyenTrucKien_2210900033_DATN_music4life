@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "2I2gET6IWtE=",
+  "dgSpecHash": "jqMWsHPv/bM=",
   "success": true,
   "projectFilePath": "D:\\ĐATN\\music4life\\music4life\\music4life.csproj",
   "expectedPackageFiles": [
@@ -48,7 +48,6 @@
     "C:\\Users\\wwwki\\.nuget\\packages\\mahapps.metro.iconpacks.vaadinicons\\6.2.1\\mahapps.metro.iconpacks.vaadinicons.6.2.1.nupkg.sha512",
     "C:\\Users\\wwwki\\.nuget\\packages\\mahapps.metro.iconpacks.weathericons\\6.2.1\\mahapps.metro.iconpacks.weathericons.6.2.1.nupkg.sha512",
     "C:\\Users\\wwwki\\.nuget\\packages\\mahapps.metro.iconpacks.zondicons\\6.2.1\\mahapps.metro.iconpacks.zondicons.6.2.1.nupkg.sha512",
-    "C:\\Users\\wwwki\\.nuget\\packages\\microsoft.net.illink.tasks\\8.0.23\\microsoft.net.illink.tasks.8.0.23.nupkg.sha512",
     "C:\\Users\\wwwki\\.nuget\\packages\\sqlite-net-pcl\\1.9.172\\sqlite-net-pcl.1.9.172.nupkg.sha512",
     "C:\\Users\\wwwki\\.nuget\\packages\\sqlitepclraw.bundle_green\\2.1.2\\sqlitepclraw.bundle_green.2.1.2.nupkg.sha512",
     "C:\\Users\\wwwki\\.nuget\\packages\\sqlitepclraw.core\\2.1.2\\sqlitepclraw.core.2.1.2.nupkg.sha512",
@@ -57,12 +56,9 @@
     "C:\\Users\\wwwki\\.nuget\\packages\\system.memory\\4.5.3\\system.memory.4.5.3.nupkg.sha512",
     "C:\\Users\\wwwki\\.nuget\\packages\\system.text.json\\8.0.5\\system.text.json.8.0.5.nupkg.sha512",
     "C:\\Users\\wwwki\\.nuget\\packages\\taglibsharp\\2.3.0\\taglibsharp.2.3.0.nupkg.sha512",
-    "C:\\Users\\wwwki\\.nuget\\packages\\microsoft.netcore.app.ref\\8.0.23\\microsoft.netcore.app.ref.8.0.23.nupkg.sha512",
-    "C:\\Users\\wwwki\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x64\\8.0.23\\microsoft.netcore.app.runtime.win-x64.8.0.23.nupkg.sha512",
     "C:\\Users\\wwwki\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\8.0.23\\microsoft.windowsdesktop.app.ref.8.0.23.nupkg.sha512",
-    "C:\\Users\\wwwki\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x64\\8.0.23\\microsoft.windowsdesktop.app.runtime.win-x64.8.0.23.nupkg.sha512",
+    "C:\\Users\\wwwki\\.nuget\\packages\\microsoft.netcore.app.ref\\8.0.23\\microsoft.netcore.app.ref.8.0.23.nupkg.sha512",
     "C:\\Users\\wwwki\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\8.0.23\\microsoft.aspnetcore.app.ref.8.0.23.nupkg.sha512",
-    "C:\\Users\\wwwki\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x64\\8.0.23\\microsoft.aspnetcore.app.runtime.win-x64.8.0.23.nupkg.sha512",
     "C:\\Users\\wwwki\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\8.0.23\\microsoft.netcore.app.host.win-x64.8.0.23.nupkg.sha512"
   ],
   "logs": []
