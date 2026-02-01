@@ -158,7 +158,6 @@ namespace music4life.Services
                 var total = _activePlayer.NaturalDuration.TimeSpan;
                 var current = _activePlayer.Position;
                 var remaining = total - current;
-
                 PositionChanged?.Invoke(current, total);
 
                 if (CrossfadeDuration > 0 &&

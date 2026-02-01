@@ -16,16 +16,17 @@ namespace music4life.Services
         {
             DatabaseService.Init();
 
+            // Lấy danh sách từ cache (DB) trước
             var cachedSongs = DatabaseService.Conn.Table<Song>().ToList();
-
             var dbMap = cachedSongs.ToDictionary(s => s.FilePath, s => s);
 
+            // [TỐI ƯU 1] Gán trực tiếp list mới thay vì Add từng phần tử gây lag
             System.Windows.Application.Current.Dispatcher.Invoke(() =>
             {
-                AllTracks.Clear();
-                foreach (var s in cachedSongs) AllTracks.Add(s);
+                AllTracks = new ObservableCollection<Song>(cachedSongs);
             });
 
+            // Chạy quét file ở luồng nền (Background Thread)
             await Task.Run(() =>
             {
                 var filesToProcess = new List<string>();
@@ -43,6 +44,7 @@ namespace music4life.Services
                             bool needsUpdate = true;
                             if (dbMap.TryGetValue(file, out var existing))
                             {
+                                // Nếu đã có thông tin kỹ thuật đầy đủ thì không cần quét lại Tag
                                 if (!string.IsNullOrEmpty(existing.TechnicalInfo) && existing.TechnicalInfo.Contains("|"))
                                 {
                                     needsUpdate = false;
@@ -59,6 +61,7 @@ namespace music4life.Services
 
                 var newSongsBag = new System.Collections.Concurrent.ConcurrentBag<Song>();
 
+                // Xử lý đọc Tag đa luồng
                 Parallel.ForEach(filesToProcess, new ParallelOptions { MaxDegreeOfParallelism = Environment.ProcessorCount }, (file) =>
                 {
                     try
@@ -84,6 +87,7 @@ namespace music4life.Services
                     catch { }
                 });
 
+                // Cập nhật Database nếu có thay đổi
                 if (!newSongsBag.IsEmpty || cachedSongs.Count != allFoundPaths.Count)
                 {
                     DatabaseService.Conn.RunInTransaction(() =>
@@ -102,15 +106,11 @@ namespace music4life.Services
                         }
                     });
 
+                    // [TỐI ƯU 2] Cập nhật lại UI một lần duy nhất sau khi quét xong và sắp xếp
                     System.Windows.Application.Current.Dispatcher.Invoke(() =>
                     {
                         var finalList = DatabaseService.Conn.Table<Song>().OrderBy(s => s.Title).ToList();
-
-                        if (finalList.Count != AllTracks.Count || !newSongsBag.IsEmpty)
-                        {
-                            AllTracks.Clear();
-                            foreach (var s in finalList) AllTracks.Add(s);
-                        }
+                        AllTracks = new ObservableCollection<Song>(finalList);
                     });
                 }
             });
@@ -127,8 +127,12 @@ namespace music4life.Services
                 var dir = stack.Pop();
                 try
                 {
+                    // [TỐI ƯU 3] Thêm StringComparison.OrdinalIgnoreCase để không bỏ sót file .MP3, .WAV chữ hoa
                     var files = Directory.GetFiles(dir, "*.*")
-                                            .Where(s => s.EndsWith(".mp3") || s.EndsWith(".flac") || s.EndsWith(".wav") || s.EndsWith(".m4a"));
+                                         .Where(s => s.EndsWith(".mp3", StringComparison.OrdinalIgnoreCase) ||
+                                                     s.EndsWith(".flac", StringComparison.OrdinalIgnoreCase) ||
+                                                     s.EndsWith(".wav", StringComparison.OrdinalIgnoreCase) ||
+                                                     s.EndsWith(".m4a", StringComparison.OrdinalIgnoreCase));
                     result.AddRange(files);
 
                     foreach (var subDir in Directory.GetDirectories(dir))
@@ -145,34 +149,23 @@ namespace music4life.Services
         {
             var props = tfile.Properties;
 
-            // --- CẬP NHẬT LOGIC HIỂN THỊ THÔNG TIN KỸ THUẬT ---
-
-            // 1. Lấy đuôi file (MP3, FLAC...)
             string ext = Path.GetExtension(file)?.TrimStart('.').ToUpper() ?? "UNK";
 
-            // 2. Tần số lấy mẫu (Sample Rate) -> Đổi sang kHz
             double sampleRateKHz = props.AudioSampleRate / 1000.0;
 
-            // 3. Kênh âm thanh (Stereo/Mono)
             string channels = props.AudioChannels == 2 ? "Stereo" : (props.AudioChannels == 1 ? "Mono" : $"{props.AudioChannels} ch");
 
-            // 4. Độ sâu Bit (Bit Depth)
             int bits = props.BitsPerSample;
 
             string techInfo;
-            // Nếu là file chất lượng cao (thường > 0 và khác 32-float mặc định của MP3)
             if (bits > 0 && bits != 32)
             {
-                // Ví dụ: FLAC | 2692 kbps | 96 kHz | 24-bit | Stereo
                 techInfo = $"{ext} | {props.AudioBitrate} kbps | {sampleRateKHz} kHz | {bits}-bit | {channels}";
             }
             else
             {
-                // Ví dụ: MP3 | 320 kbps | 44.1 kHz | Stereo
                 techInfo = $"{ext} | {props.AudioBitrate} kbps | {sampleRateKHz} kHz | {channels}";
             }
-
-            // --- KẾT THÚC CẬP NHẬT ---
 
             return new Song
             {
