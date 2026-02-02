@@ -18,6 +18,8 @@ namespace music4life.Models
         public DateTime DateAdded { get; set; }
         public string TechnicalInfo { get; set; }
 
+        [Ignore]
+        public bool IsMetadataLoaded { get; set; } = true;
 
         private bool _isPlaying;
         [Ignore]

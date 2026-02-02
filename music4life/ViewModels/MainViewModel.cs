@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 
 namespace music4life.ViewModels
 {
+    // --- Các Class Model phụ trợ giữ nguyên ---
     public class AlbumInfo : BaseViewModel
     {
         public string Title { get; set; }
@@ -49,6 +50,7 @@ namespace music4life.ViewModels
         public string SongCountText => $"{SongCount} bài hát";
     }
 
+    // --- MainViewModel chính ---
     public class MainViewModel : BaseViewModel
     {
         public event Action RequestOpenSongList;
@@ -59,6 +61,14 @@ namespace music4life.ViewModels
         private bool _isAlbumsLoaded = false;
         private bool _isArtistsLoaded = false;
         private bool _isGenresLoaded = false;
+
+        // [GIỮ LẠI] Thuộc tính này cần thiết cho ProgressBar
+        private bool _isBusy;
+        public bool IsBusy
+        {
+            get => _isBusy;
+            set { _isBusy = value; OnPropertyChanged(); }
+        }
 
         private Song _songInSidebar;
         public Song SongInSidebar { get => _songInSidebar; set { _songInSidebar = value; OnPropertyChanged(); } }
@@ -81,6 +91,7 @@ namespace music4life.ViewModels
             }
         }
 
+        // Các danh sách hiển thị
         private ObservableCollection<GenreInfo> _genreList; public ObservableCollection<GenreInfo> GenreList { get => _genreList; set { _genreList = value; OnPropertyChanged(); } }
         private ObservableCollection<ArtistInfo> _artistList; public ObservableCollection<ArtistInfo> ArtistList { get => _artistList; set { _artistList = value; OnPropertyChanged(); } }
         private ObservableCollection<AlbumInfo> _albumList; public ObservableCollection<AlbumInfo> AlbumList { get => _albumList; set { _albumList = value; OnPropertyChanged(); } }
@@ -100,6 +111,7 @@ namespace music4life.ViewModels
         private string _searchText;
         public string SearchText { get => _searchText; set { _searchText = value; OnPropertyChanged(); FilterSongs(); } }
 
+        // Player controls properties
         private bool _isPlaying; public bool IsPlaying { get => _isPlaying; set { _isPlaying = value; OnPropertyChanged(); } }
         private string _songTitle = "Music for Life"; public string SongTitle { get => _songTitle; set { _songTitle = value; OnPropertyChanged(); } }
         private string _songArtist = "Select a song to play"; public string SongArtist { get => _songArtist; set { _songArtist = value; OnPropertyChanged(); } }
@@ -120,6 +132,7 @@ namespace music4life.ViewModels
         private string _songYear; public string SongYear { get => _songYear; set { _songYear = value; OnPropertyChanged(); } }
         private string _songTechInfo; public string SongTechInfo { get => _songTechInfo; set { _songTechInfo = value; OnPropertyChanged(); } }
 
+        // Commands
         public ICommand PlayPauseCommand { get; set; }
         public ICommand NextCommand { get; set; }
         public ICommand PreviousCommand { get; set; }
@@ -146,6 +159,12 @@ namespace music4life.ViewModels
             GenreList = new ObservableCollection<GenreInfo>();
             ArtistList = new ObservableCollection<ArtistInfo>();
             AlbumList = new ObservableCollection<AlbumInfo>();
+
+            // Đăng ký nhận sự kiện quét nhạc (Để bật tắt ProgressBar)
+            MusicManager.IsScanningChanged += (isScanning) =>
+            {
+                IsBusy = isScanning;
+            };
 
             MusicPlayer.SongChanged += OnSongChanged;
             MusicPlayer.PlaybackStateChanged += OnPlaybackStateChanged;
@@ -228,16 +247,21 @@ namespace music4life.ViewModels
 
         private void InitializeCommands()
         {
+            // [ĐÃ XÓA] AddFilesCommand (chọn file lẻ) đã được loại bỏ theo yêu cầu
+
             PlayPauseCommand = new RelayCommand<object>((p) => { MusicPlayer.TogglePlayPause(); });
             NextCommand = new RelayCommand<object>((p) => MusicPlayer.Next());
             PreviousCommand = new RelayCommand<object>((p) => MusicPlayer.Previous());
             ShuffleCommand = new RelayCommand<object>((p) => { MusicPlayer.ToggleShuffle(); IsShuffle = MusicPlayer.IsShuffle; UpdatePlayingQueue(); });
+
             ToggleRepeatCommand = new RelayCommand<object>((p) => {
                 if (MusicPlayer.CurrentRepeatMode == RepeatMode.None) { MusicPlayer.CurrentRepeatMode = RepeatMode.RepeatAll; CurrentRepeatMode = "RepeatAll"; }
                 else if (MusicPlayer.CurrentRepeatMode == RepeatMode.RepeatAll) { MusicPlayer.CurrentRepeatMode = RepeatMode.RepeatOne; CurrentRepeatMode = "RepeatOne"; }
                 else { MusicPlayer.CurrentRepeatMode = RepeatMode.None; CurrentRepeatMode = "None"; }
             });
+
             PlaySongCommand = new RelayCommand<Song>((song) => { if (song != null) MusicPlayer.PlayTrack(song, DisplayedTracks.ToList()); });
+
             PlayNextCommand = new RelayCommand<Song>((song) => {
                 if (song != null && MusicPlayer.CurrentPlaylist != null)
                 {
@@ -247,6 +271,7 @@ namespace music4life.ViewModels
                     UpdatePlayingQueue();
                 }
             });
+
             AddToQueueCommand = new RelayCommand<Song>((song) => { if (song != null) { MusicPlayer.CurrentPlaylist?.Add(song); UpdatePlayingQueue(); } });
             RemoveSongCommand = new RelayCommand<Song>((song) => { if (song != null) { AllSongs.Remove(song); DisplayedTracks.Remove(song); TotalSongs = DisplayedTracks.Count; } });
 
@@ -267,8 +292,10 @@ namespace music4life.ViewModels
 
             ShowFavoritesCommand = new RelayCommand<object>((p) => { _isViewingFavorites = true; var favList = AllSongs.Where(s => s.IsFavorite).ToList(); DisplayedTracks = new ObservableCollection<Song>(favList); TotalSongs = DisplayedTracks.Count; });
             RemoveFromQueueCommand = new RelayCommand<Song>((song) => { if (song != null) { PlayingQueue.Remove(song); } });
+
             OpenAlbumCommand = new RelayCommand<string>((albumName) => { FilterSongsByAlbum(albumName); RequestOpenSongList?.Invoke(); });
             OpenGenreCommand = new RelayCommand<string>((genreName) => { FilterSongsByGenre(genreName); RequestOpenSongList?.Invoke(); });
+
             CreatePlaylistCommand = new RelayCommand<string>((name) => { if (!string.IsNullOrEmpty(name)) { PlaylistService.CreatePlaylist(name); UserPlaylists = PlaylistService.AllPlaylists; } });
 
             AddSongToPlaylistCommand = new RelayCommand<object>((param) => {
@@ -328,6 +355,7 @@ namespace music4life.ViewModels
                 }
             });
         }
+
         public void RefreshData(List<Song> newSongs)
         {
             if (newSongs == null) return;

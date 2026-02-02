@@ -20,6 +20,8 @@
     </WindowChrome.WindowChrome>
 
     <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+
         <Style x:Key="DarkContextMenuStyle" TargetType="{x:Type ContextMenu}">
             <Setter Property="SnapsToDevicePixels" Value="True" />
             <Setter Property="OverridesDefaultStyle" Value="True" />
@@ -301,6 +303,15 @@
                         <TextBlock Text="Thư viện" Foreground="{StaticResource Brush.Text.Secondary}" FontWeight="Bold" FontSize="11" Margin="20,0,0,8"/>
 
                         <StackPanel>
+                            <Button Style="{StaticResource SidebarBtnStyle}" Command="{Binding AddFilesCommand}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Path Data="M14,2H6C4.89,2 4,2.89 4,4V20C4,21.11 4.89,22 6,22H18C19.11,22 20,21.11 20,20V8L14,2M16,13H13V16H11V13H8V11H11V8H13V11H16V13Z"
+                                          Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}"
+                                          Width="16" Height="16" Stretch="Uniform" Margin="0,0,15,0"/>
+                                    <TextBlock Text="Thêm nhạc" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+
                             <Button Style="{StaticResource SidebarBtnStyle}" Click="BtnAllSongs_Click">
                                 <StackPanel Orientation="Horizontal">
                                     <Path Data="M12,3V12.26C11.5,12.09 11,12 10.5,12C8,12 6,14 6,16.5C6,19 8,21 10.5,21C13,21 15,19 15,16.5V6H19V3H12Z" 
@@ -407,9 +418,26 @@
                 </Grid>
             </Border>
 
-            <ContentControl Grid.Column="1" Margin="20,10,0,10" x:Name="MainContent">
-                <views:SongListView />
-            </ContentControl>
+            <Grid Grid.Column="1" Margin="20,10,0,10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <ProgressBar Grid.Row="0"
+                             IsIndeterminate="True" 
+                             Height="4" 
+                             Background="Transparent" 
+                             BorderThickness="0" 
+                             Foreground="#00ADEF" 
+                             VerticalAlignment="Top"
+                             Margin="0,0,0,5"
+                             Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+                <ContentControl Grid.Row="1" x:Name="MainContent">
+                    <views:SongListView />
+                </ContentControl>
+            </Grid>
 
             <Grid Grid.Column="2" Background="{StaticResource Brush.Bg.Secondary}">
                 <Grid.RowDefinitions>
