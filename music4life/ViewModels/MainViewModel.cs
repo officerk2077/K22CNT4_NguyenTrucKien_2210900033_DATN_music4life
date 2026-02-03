@@ -55,7 +55,6 @@ namespace music4life.ViewModels
         public string SongCountText => $"{SongCount} bài hát";
     }
 
-    // --- MainViewModel chính ---
     public class MainViewModel : BaseViewModel
     {
         public event Action RequestOpenSongList;

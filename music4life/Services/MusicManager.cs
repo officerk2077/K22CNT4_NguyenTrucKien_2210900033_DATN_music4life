@@ -7,8 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Data;
-
-// [FIX] Alias cho Application để tránh xung đột với WinForms
 using Application = System.Windows.Application;
 
 namespace music4life.Services
@@ -36,7 +34,6 @@ namespace music4life.Services
             {
                 DatabaseService.Init();
 
-                // Tối ưu hóa SQLite cho tốc độ ghi cao nhất
                 lock (_dbLock)
                 {
                     try
@@ -47,14 +44,12 @@ namespace music4life.Services
                     catch { }
                 }
 
-                // Lấy danh sách nhạc cũ từ DB
                 List<Song> cachedSongs;
                 lock (_dbLock) cachedSongs = DatabaseService.Conn.Table<Song>().ToList();
 
                 var songsToRemove = new List<Song>();
                 var validSongs = new List<Song>();
 
-                // Kiểm tra xem bài hát cũ còn nằm trong các thư mục được chọn không
                 foreach (var song in cachedSongs)
                 {
                     bool isValid = false;
@@ -70,7 +65,6 @@ namespace music4life.Services
                     else songsToRemove.Add(song);
                 }
 
-                // Xóa các bài hát không còn hợp lệ khỏi DB
                 if (songsToRemove.Count > 0)
                 {
                     lock (_dbLock)
@@ -82,18 +76,15 @@ namespace music4life.Services
                     }
                 }
 
-                // Tạo từ điển để tra cứu nhanh
                 var dbMap = new Dictionary<string, Song>(StringComparer.OrdinalIgnoreCase);
                 foreach (var s in validSongs) dbMap[s.FilePath] = s;
 
-                // Cập nhật giao diện với danh sách hợp lệ ban đầu
                 lock (_listLock)
                 {
                     AllTracks.Clear();
                     foreach (var s in validSongs) AllTracks.Add(s);
                 }
 
-                // Bắt đầu quét file mới trên luồng phụ
                 await Task.Run(() =>
                 {
                     var bufferFiles = new List<string>();
@@ -103,12 +94,10 @@ namespace music4life.Services
                     {
                         allFoundPaths.Add(file);
 
-                        // Nếu file đã có trong DB thì bỏ qua
                         if (dbMap.ContainsKey(file)) continue;
 
                         bufferFiles.Add(file);
 
-                        // Gom nhóm 20 file để xử lý một lần (Batch Processing)
                         if (bufferFiles.Count >= 20)
                         {
                             ProcessAndDisplayBatch(bufferFiles);
@@ -116,10 +105,8 @@ namespace music4life.Services
                         }
                     }
 
-                    // Xử lý nốt các file còn lại trong buffer
                     if (bufferFiles.Count > 0) ProcessAndDisplayBatch(bufferFiles);
 
-                    // Xóa các file trong DB nhưng thực tế không còn trên ổ cứng (User đã xóa file)
                     var missingFiles = validSongs.Where(s => !allFoundPaths.Contains(s.FilePath)).ToList();
                     if (missingFiles.Count > 0)
                     {
@@ -154,7 +141,6 @@ namespace music4life.Services
         {
             var processedSongs = new ConcurrentBag<Song>();
 
-            // Đọc Metadata đa luồng để tăng tốc
             Parallel.ForEach(files, new ParallelOptions { MaxDegreeOfParallelism = Environment.ProcessorCount }, (file) =>
             {
                 try
@@ -172,7 +158,6 @@ namespace music4life.Services
 
             if (!processedSongs.IsEmpty)
             {
-                // Ghi vào DB
                 lock (_dbLock)
                 {
                     DatabaseService.Conn.RunInTransaction(() =>
@@ -181,7 +166,6 @@ namespace music4life.Services
                     });
                 }
 
-                // Cập nhật lên giao diện
                 lock (_listLock)
                 {
                     foreach (var s in processedSongs)
@@ -243,7 +227,6 @@ namespace music4life.Services
             var tag = tfile.Tag;
             string ext = Path.GetExtension(file)?.TrimStart('.').ToUpper() ?? "UNK";
 
-            // [NÂNG CẤP] Xử lý lấy nhiều ca sĩ (Artist A; Artist B)
             string artistFull = "Unknown Artist";
             if (tag.Performers != null && tag.Performers.Length > 0)
             {

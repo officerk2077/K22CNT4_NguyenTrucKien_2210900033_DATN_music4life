@@ -22,8 +22,8 @@ namespace music4life.ViewModels
         private double _crossfadeSeconds;
         private bool _isMinimizeToTrayEnabled;
         private bool _isScanning;
-
         private string _statusMessage;
+        private readonly string _settingsFilePath;
 
         public ObservableCollection<string> MusicFolders { get; set; }
 
@@ -34,7 +34,6 @@ namespace music4life.ViewModels
             {
                 _crossfadeSeconds = value;
                 OnPropertyChanged();
-
                 music4life.Services.MusicPlayer.CrossfadeDuration = value;
             }
         }
@@ -61,10 +60,13 @@ namespace music4life.ViewModels
         public ICommand RemoveFolderCommand { get; set; }
         public ICommand SaveSettingsCommand { get; set; }
         public ICommand RescanCommand { get; set; }
-        public ICommand CloseCommand { get; set; }
 
         public SettingsViewModel()
         {
+            string roamingFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "music4life");
+            if (!Directory.Exists(roamingFolder)) Directory.CreateDirectory(roamingFolder);
+            _settingsFilePath = Path.Combine(roamingFolder, "settings.json");
+
             MusicFolders = new ObservableCollection<string>();
             _isScanning = false;
             StatusMessage = "Sẵn sàng";
@@ -73,9 +75,7 @@ namespace music4life.ViewModels
 
             AddFolderCommand = new RelayCommand<object>((p) => AddFolder());
             RemoveFolderCommand = new RelayCommand<string>((path) => RemoveFolder(path));
-
             SaveSettingsCommand = new RelayCommand<object>((p) => SaveSettings(p));
-
             RescanCommand = new RelayCommand<object>(async (p) => await RescanLibrary());
         }
 
@@ -92,12 +92,7 @@ namespace music4life.ViewModels
                     {
                         MusicFolders.Add(dialog.SelectedPath);
                         StatusMessage = "Đã thêm thư mục. Hãy bấm 'Lưu' hoặc 'Quét lại'.";
-
-                        MessageBox.Show(
-                            "Đã thêm thư mục thành công!\n\nVui lòng bấm nút 'Lưu Cài Đặt' để cập nhật.",
-                            "Thông báo",
-                            MessageBoxButton.OK,
-                            MessageBoxImage.Information);
+                        MessageBox.Show("Đã thêm thư mục thành công!\n\nVui lòng bấm nút 'Lưu Cài Đặt' để cập nhật.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
                     else
                     {
@@ -126,10 +121,8 @@ namespace music4life.ViewModels
                 {
                     mainVm.RefreshData(new List<Song>());
                 }
-
                 music4life.Services.MusicPlayer.CurrentPlaylist.Clear();
                 MusicManager.AllTracks.Clear();
-
                 StatusMessage = "Thư viện trống (Chưa chọn thư mục).";
                 MessageBox.Show("Đã xoá hết thư mục. Thư viện nhạc đã được làm trống.", "Thông báo");
                 return;
@@ -142,11 +135,9 @@ namespace music4life.ViewModels
                 StatusMessage = "Đang quét dữ liệu... Vui lòng đợi.";
 
                 var folders = new List<string>(MusicFolders);
-
                 await MusicManager.ScanMusic(folders);
 
                 var newSongs = MusicManager.AllTracks;
-
                 if (Application.Current.MainWindow.DataContext is MainViewModel mainVm)
                 {
                     mainVm.RefreshData(newSongs.ToList());
@@ -181,10 +172,9 @@ namespace music4life.ViewModels
             try
             {
                 string jsonString = JsonSerializer.Serialize(settings);
-                File.WriteAllText("settings.json", jsonString);
+                File.WriteAllText(_settingsFilePath, jsonString);
 
                 StatusMessage = "Đã lưu cài đặt. Đang bắt đầu quét...";
-
                 _ = RescanLibrary();
 
                 if (parameter is System.Windows.Window window)
@@ -200,18 +190,18 @@ namespace music4life.ViewModels
 
         private void LoadSettings()
         {
-            if (File.Exists("settings.json"))
+            if (File.Exists(_settingsFilePath))
             {
                 try
                 {
-                    string jsonString = File.ReadAllText("settings.json");
+                    string jsonString = File.ReadAllText(_settingsFilePath);
                     var settings = JsonSerializer.Deserialize<AppSettings>(jsonString);
                     if (settings != null)
                     {
                         CrossfadeSeconds = settings.CrossfadeSeconds;
                         music4life.Services.MusicPlayer.CrossfadeDuration = settings.CrossfadeSeconds;
-
                         IsMinimizeToTrayEnabled = settings.IsMinimizeToTrayEnabled;
+
                         MusicFolders.Clear();
                         if (settings.MusicFolders != null)
                             foreach (var f in settings.MusicFolders) MusicFolders.Add(f);
