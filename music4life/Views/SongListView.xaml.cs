@@ -1,8 +1,11 @@
-﻿using System.Linq;
-using System.Windows;
+﻿using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using music4life.Models;
 using music4life.ViewModels;
+
+// [FIX] Thêm các dòng này để chỉ định rõ dùng Controls của WPF
+// Tránh nhầm lẫn với Windows Forms
 using UserControl = System.Windows.Controls.UserControl;
 using ListViewItem = System.Windows.Controls.ListViewItem;
 using ComboBoxItem = System.Windows.Controls.ComboBoxItem;
@@ -14,11 +17,11 @@ namespace music4life.Views
         public SongListView()
         {
             InitializeComponent();
-
         }
 
         private void SongItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            // ListViewItem giờ đã được hiểu là của WPF
             if (sender is ListViewItem item && item.Content is Song selectedSong)
             {
                 if (this.DataContext is MainViewModel vm)
@@ -33,6 +36,7 @@ namespace music4life.Views
 
         private void SortOption_Selected(object sender, RoutedEventArgs e)
         {
+            // ComboBoxItem cũng vậy
             if (sender is ComboBoxItem item && item.Tag != null)
             {
                 if (this.DataContext is MainViewModel vm)
@@ -46,14 +50,13 @@ namespace music4life.Views
                 }
             }
         }
+
         private void ListViewItem_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
-            var item = sender as ListViewItem;
-            if (item != null)
+            if (sender is ListViewItem item)
             {
                 item.IsSelected = true;
                 item.Focus();
-
             }
         }
     }

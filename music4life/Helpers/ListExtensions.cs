@@ -5,7 +5,7 @@ namespace music4life.Helpers
 {
     public static class ListExtensions
     {
-        private static Random _rng = new Random();
+        private static readonly Random _rng = new Random();
 
         public static void Shuffle<T>(this IList<T> list)
         {
@@ -14,9 +14,8 @@ namespace music4life.Helpers
             {
                 n--;
                 int k = _rng.Next(n + 1);
-                T value = list[k];
-                list[k] = list[n];
-                list[n] = value;
+
+                (list[k], list[n]) = (list[n], list[k]);
             }
         }
     }

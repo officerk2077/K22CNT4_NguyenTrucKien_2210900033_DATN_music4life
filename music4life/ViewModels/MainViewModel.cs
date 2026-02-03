@@ -10,9 +10,14 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
+using Application = System.Windows.Application;
+using MessageBox = System.Windows.MessageBox;
+using MessageBoxButton = System.Windows.MessageBoxButton;
+using MessageBoxImage = System.Windows.MessageBoxImage;
+using MessageBoxResult = System.Windows.MessageBoxResult;
+
 namespace music4life.ViewModels
 {
-    // --- Các Class Model phụ trợ giữ nguyên ---
     public class AlbumInfo : BaseViewModel
     {
         public string Title { get; set; }
@@ -62,7 +67,6 @@ namespace music4life.ViewModels
         private bool _isArtistsLoaded = false;
         private bool _isGenresLoaded = false;
 
-        // [GIỮ LẠI] Thuộc tính này cần thiết cho ProgressBar
         private bool _isBusy;
         public bool IsBusy
         {
@@ -91,7 +95,6 @@ namespace music4life.ViewModels
             }
         }
 
-        // Các danh sách hiển thị
         private ObservableCollection<GenreInfo> _genreList; public ObservableCollection<GenreInfo> GenreList { get => _genreList; set { _genreList = value; OnPropertyChanged(); } }
         private ObservableCollection<ArtistInfo> _artistList; public ObservableCollection<ArtistInfo> ArtistList { get => _artistList; set { _artistList = value; OnPropertyChanged(); } }
         private ObservableCollection<AlbumInfo> _albumList; public ObservableCollection<AlbumInfo> AlbumList { get => _albumList; set { _albumList = value; OnPropertyChanged(); } }
@@ -111,7 +114,6 @@ namespace music4life.ViewModels
         private string _searchText;
         public string SearchText { get => _searchText; set { _searchText = value; OnPropertyChanged(); FilterSongs(); } }
 
-        // Player controls properties
         private bool _isPlaying; public bool IsPlaying { get => _isPlaying; set { _isPlaying = value; OnPropertyChanged(); } }
         private string _songTitle = "Music for Life"; public string SongTitle { get => _songTitle; set { _songTitle = value; OnPropertyChanged(); } }
         private string _songArtist = "Select a song to play"; public string SongArtist { get => _songArtist; set { _songArtist = value; OnPropertyChanged(); } }
@@ -132,7 +134,6 @@ namespace music4life.ViewModels
         private string _songYear; public string SongYear { get => _songYear; set { _songYear = value; OnPropertyChanged(); } }
         private string _songTechInfo; public string SongTechInfo { get => _songTechInfo; set { _songTechInfo = value; OnPropertyChanged(); } }
 
-        // Commands
         public ICommand PlayPauseCommand { get; set; }
         public ICommand NextCommand { get; set; }
         public ICommand PreviousCommand { get; set; }
@@ -160,7 +161,6 @@ namespace music4life.ViewModels
             ArtistList = new ObservableCollection<ArtistInfo>();
             AlbumList = new ObservableCollection<AlbumInfo>();
 
-            // Đăng ký nhận sự kiện quét nhạc (Để bật tắt ProgressBar)
             MusicManager.IsScanningChanged += (isScanning) =>
             {
                 IsBusy = isScanning;
@@ -247,8 +247,6 @@ namespace music4life.ViewModels
 
         private void InitializeCommands()
         {
-            // [ĐÃ XÓA] AddFilesCommand (chọn file lẻ) đã được loại bỏ theo yêu cầu
-
             PlayPauseCommand = new RelayCommand<object>((p) => { MusicPlayer.TogglePlayPause(); });
             NextCommand = new RelayCommand<object>((p) => MusicPlayer.Next());
             PreviousCommand = new RelayCommand<object>((p) => MusicPlayer.Previous());
@@ -305,9 +303,9 @@ namespace music4life.ViewModels
                 if (targetPlaylist != null && SelectedSong != null)
                 {
                     PlaylistService.AddSongToPlaylist(targetPlaylist, SelectedSong.FilePath);
-                    System.Windows.MessageBox.Show($"Đã thêm '{SelectedSong.Title}' vào playlist '{targetPlaylist.Name}'", "Thành công");
+                    MessageBox.Show($"Đã thêm '{SelectedSong.Title}' vào playlist '{targetPlaylist.Name}'", "Thành công");
                 }
-                else if (SelectedSong == null) { System.Windows.MessageBox.Show("Vui lòng chọn một bài hát trước!", "Thông báo"); }
+                else if (SelectedSong == null) { MessageBox.Show("Vui lòng chọn một bài hát trước!", "Thông báo"); }
             });
 
             OpenPlaylistCommand = new RelayCommand<Playlist>((playlist) => {
@@ -319,13 +317,13 @@ namespace music4life.ViewModels
             DeletePlaylistCommand = new RelayCommand<Playlist>((playlist) =>
             {
                 if (playlist == null) return;
-                var result = System.Windows.MessageBox.Show(
+                var result = MessageBox.Show(
                     $"Bạn có chắc muốn xóa playlist '{playlist.Name}' không?",
                     "Xác nhận xóa",
-                    System.Windows.MessageBoxButton.YesNo,
-                    System.Windows.MessageBoxImage.Warning);
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Warning);
 
-                if (result == System.Windows.MessageBoxResult.Yes)
+                if (result == MessageBoxResult.Yes)
                 {
                     PlaylistService.DeletePlaylist(playlist);
                     UserPlaylists = PlaylistService.AllPlaylists;
@@ -337,10 +335,10 @@ namespace music4life.ViewModels
                 if (playlist == null) return;
                 var renameWindow = new music4life.Views.CreatePlaylistWindow(playlist.Name);
 
-                if (System.Windows.Application.Current.MainWindow != null)
+                if (Application.Current.MainWindow != null)
                 {
-                    renameWindow.Owner = System.Windows.Application.Current.MainWindow;
-                    System.Windows.Application.Current.MainWindow.Opacity = 0.5;
+                    renameWindow.Owner = Application.Current.MainWindow;
+                    Application.Current.MainWindow.Opacity = 0.5;
                 }
 
                 if (renameWindow.ShowDialog() == true)
@@ -349,9 +347,9 @@ namespace music4life.ViewModels
                     PlaylistService.RenamePlaylist(playlist, newName);
                 }
 
-                if (System.Windows.Application.Current.MainWindow != null)
+                if (Application.Current.MainWindow != null)
                 {
-                    System.Windows.Application.Current.MainWindow.Opacity = 1.0;
+                    Application.Current.MainWindow.Opacity = 1.0;
                 }
             });
         }

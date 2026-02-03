@@ -1,10 +1,13 @@
-﻿using music4life.ViewModels;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
+using music4life.ViewModels;
+using Button = System.Windows.Controls.Button;
+using UserControl = System.Windows.Controls.UserControl;
+using Application = System.Windows.Application;
 
 namespace music4life.Views
 {
-    public partial class ArtistsView : System.Windows.Controls.UserControl
+    public partial class ArtistsView : UserControl
     {
         public ArtistsView()
         {
@@ -13,9 +16,9 @@ namespace music4life.Views
 
         private void ArtistCard_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is System.Windows.Controls.Button btn && btn.DataContext is ArtistInfo artist)
+            if (sender is Button btn && btn.DataContext is ArtistInfo artist)
             {
-                var mainWindow = (MainWindow)System.Windows.Application.Current.MainWindow;
+                var mainWindow = (MainWindow)Application.Current.MainWindow;
 
                 if (mainWindow.DataContext is MainViewModel viewModel)
                 {

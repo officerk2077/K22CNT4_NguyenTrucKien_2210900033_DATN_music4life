@@ -1,15 +1,12 @@
-﻿using music4life.ViewModels;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
+using music4life.ViewModels;
 using Button = System.Windows.Controls.Button;
 using UserControl = System.Windows.Controls.UserControl;
 using Application = System.Windows.Application;
 
 namespace music4life.Views
 {
-    /// <summary>
-    /// Interaction logic for AlbumView.xaml
-    /// </summary>
     public partial class AlbumView : UserControl
     {
         public AlbumView()

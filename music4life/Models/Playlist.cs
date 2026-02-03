@@ -1,5 +1,5 @@
-﻿using SQLite; // ✅ Bắt buộc có để dùng [PrimaryKey]
-using music4life.ViewModels;
+﻿using music4life.ViewModels;
+using SQLite;
 using System;
 using System.Collections.Generic;
 
@@ -14,11 +14,7 @@ namespace music4life.Models
         public string Name
         {
             get => _name;
-            set
-            {
-                _name = value;
-                OnPropertyChanged();
-            }
+            set { _name = value; OnPropertyChanged(); }
         }
 
         public DateTime CreatedDate { get; set; } = DateTime.Now;

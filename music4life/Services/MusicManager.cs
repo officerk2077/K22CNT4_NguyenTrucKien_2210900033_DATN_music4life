@@ -8,6 +8,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Data;
 
+// [FIX] Alias cho Application để tránh xung đột với WinForms
+using Application = System.Windows.Application;
+
 namespace music4life.Services
 {
     public static class MusicManager
@@ -33,6 +36,7 @@ namespace music4life.Services
             {
                 DatabaseService.Init();
 
+                // Tối ưu hóa SQLite cho tốc độ ghi cao nhất
                 lock (_dbLock)
                 {
                     try
@@ -43,12 +47,14 @@ namespace music4life.Services
                     catch { }
                 }
 
+                // Lấy danh sách nhạc cũ từ DB
                 List<Song> cachedSongs;
                 lock (_dbLock) cachedSongs = DatabaseService.Conn.Table<Song>().ToList();
 
                 var songsToRemove = new List<Song>();
                 var validSongs = new List<Song>();
 
+                // Kiểm tra xem bài hát cũ còn nằm trong các thư mục được chọn không
                 foreach (var song in cachedSongs)
                 {
                     bool isValid = false;
@@ -64,6 +70,7 @@ namespace music4life.Services
                     else songsToRemove.Add(song);
                 }
 
+                // Xóa các bài hát không còn hợp lệ khỏi DB
                 if (songsToRemove.Count > 0)
                 {
                     lock (_dbLock)
@@ -75,15 +82,18 @@ namespace music4life.Services
                     }
                 }
 
+                // Tạo từ điển để tra cứu nhanh
                 var dbMap = new Dictionary<string, Song>(StringComparer.OrdinalIgnoreCase);
                 foreach (var s in validSongs) dbMap[s.FilePath] = s;
 
+                // Cập nhật giao diện với danh sách hợp lệ ban đầu
                 lock (_listLock)
                 {
                     AllTracks.Clear();
                     foreach (var s in validSongs) AllTracks.Add(s);
                 }
 
+                // Bắt đầu quét file mới trên luồng phụ
                 await Task.Run(() =>
                 {
                     var bufferFiles = new List<string>();
@@ -93,10 +103,12 @@ namespace music4life.Services
                     {
                         allFoundPaths.Add(file);
 
+                        // Nếu file đã có trong DB thì bỏ qua
                         if (dbMap.ContainsKey(file)) continue;
 
                         bufferFiles.Add(file);
 
+                        // Gom nhóm 20 file để xử lý một lần (Batch Processing)
                         if (bufferFiles.Count >= 20)
                         {
                             ProcessAndDisplayBatch(bufferFiles);
@@ -104,8 +116,10 @@ namespace music4life.Services
                         }
                     }
 
+                    // Xử lý nốt các file còn lại trong buffer
                     if (bufferFiles.Count > 0) ProcessAndDisplayBatch(bufferFiles);
 
+                    // Xóa các file trong DB nhưng thực tế không còn trên ổ cứng (User đã xóa file)
                     var missingFiles = validSongs.Where(s => !allFoundPaths.Contains(s.FilePath)).ToList();
                     if (missingFiles.Count > 0)
                     {
@@ -129,7 +143,7 @@ namespace music4life.Services
             }
             finally
             {
-                System.Windows.Application.Current.Dispatcher.Invoke(() =>
+                Application.Current.Dispatcher.Invoke(() =>
                 {
                     IsScanningChanged?.Invoke(false);
                 });
@@ -140,6 +154,7 @@ namespace music4life.Services
         {
             var processedSongs = new ConcurrentBag<Song>();
 
+            // Đọc Metadata đa luồng để tăng tốc
             Parallel.ForEach(files, new ParallelOptions { MaxDegreeOfParallelism = Environment.ProcessorCount }, (file) =>
             {
                 try
@@ -157,6 +172,7 @@ namespace music4life.Services
 
             if (!processedSongs.IsEmpty)
             {
+                // Ghi vào DB
                 lock (_dbLock)
                 {
                     DatabaseService.Conn.RunInTransaction(() =>
@@ -165,6 +181,7 @@ namespace music4life.Services
                     });
                 }
 
+                // Cập nhật lên giao diện
                 lock (_listLock)
                 {
                     foreach (var s in processedSongs)
@@ -200,8 +217,8 @@ namespace music4life.Services
                         }
                     }
                     catch (UnauthorizedAccessException) { continue; }
-                    catch (IOException) { continue; }             
-                    catch { continue; }                            
+                    catch (IOException) { continue; }
+                    catch { continue; }
 
                     if (filesInCurrentDir != null)
                     {
@@ -223,19 +240,43 @@ namespace music4life.Services
         private static Song CreateSongFromTag(string file, TagLib.File tfile)
         {
             var props = tfile.Properties;
+            var tag = tfile.Tag;
             string ext = Path.GetExtension(file)?.TrimStart('.').ToUpper() ?? "UNK";
+
+            // [NÂNG CẤP] Xử lý lấy nhiều ca sĩ (Artist A; Artist B)
+            string artistFull = "Unknown Artist";
+            if (tag.Performers != null && tag.Performers.Length > 0)
+            {
+                artistFull = string.Join(", ", tag.Performers);
+            }
+            else if (!string.IsNullOrWhiteSpace(tag.FirstPerformer))
+            {
+                artistFull = tag.FirstPerformer;
+            }
+
+            string channels = props.AudioChannels == 1 ? "Mono" : "Stereo";
+            if (props.AudioChannels > 2) channels = $"{props.AudioChannels} Ch";
+
+            string bitDepth = props.BitsPerSample > 0 ? $" | {props.BitsPerSample} bit" : "";
+
+            string techInfoFull = $"{ext}" +
+                                  $" | {props.AudioBitrate} kbps" +
+                                  $" | {props.AudioSampleRate / 1000.0:F1} kHz" +
+                                  bitDepth +
+                                  $" | {channels}";
 
             return new Song
             {
                 FilePath = file,
-                Title = !string.IsNullOrWhiteSpace(tfile.Tag.Title) ? tfile.Tag.Title : Path.GetFileNameWithoutExtension(file),
-                Artist = !string.IsNullOrWhiteSpace(tfile.Tag.FirstPerformer) ? tfile.Tag.FirstPerformer : "Unknown Artist",
-                Album = !string.IsNullOrWhiteSpace(tfile.Tag.Album) ? tfile.Tag.Album : "Unknown Album",
-                Genre = tfile.Tag.FirstGenre ?? "Unknown",
-                Year = tfile.Tag.Year > 0 ? tfile.Tag.Year.ToString() : "",
+                Title = !string.IsNullOrWhiteSpace(tag.Title) ? tag.Title : Path.GetFileNameWithoutExtension(file),
+                Artist = artistFull,
+                Album = !string.IsNullOrWhiteSpace(tag.Album) ? tag.Album : "Unknown Album",
+                Genre = tag.FirstGenre ?? "Unknown",
+                Year = tag.Year > 0 ? tag.Year.ToString() : "",
                 Duration = props.Duration.ToString(@"mm\:ss"),
                 DateAdded = File.GetCreationTime(file),
-                TechnicalInfo = $"{ext} | {props.AudioBitrate} kbps",
+                TechnicalInfo = techInfoFull,
+
                 IsMetadataLoaded = true
             };
         }

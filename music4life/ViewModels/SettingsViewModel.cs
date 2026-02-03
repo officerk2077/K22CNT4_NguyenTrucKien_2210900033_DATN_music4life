@@ -9,7 +9,11 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
-using WpfApp = System.Windows.Application;
+
+using Application = System.Windows.Application;
+using MessageBox = System.Windows.MessageBox;
+using MessageBoxButton = System.Windows.MessageBoxButton;
+using MessageBoxImage = System.Windows.MessageBoxImage;
 
 namespace music4life.ViewModels
 {
@@ -89,15 +93,15 @@ namespace music4life.ViewModels
                         MusicFolders.Add(dialog.SelectedPath);
                         StatusMessage = "Đã thêm thư mục. Hãy bấm 'Lưu' hoặc 'Quét lại'.";
 
-                        System.Windows.MessageBox.Show(
+                        MessageBox.Show(
                             "Đã thêm thư mục thành công!\n\nVui lòng bấm nút 'Lưu Cài Đặt' để cập nhật.",
                             "Thông báo",
-                            System.Windows.MessageBoxButton.OK,
-                            System.Windows.MessageBoxImage.Information);
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Information);
                     }
                     else
                     {
-                        System.Windows.MessageBox.Show("Thư mục này đã có trong danh sách rồi!", "Trùng lặp");
+                        MessageBox.Show("Thư mục này đã có trong danh sách rồi!", "Trùng lặp");
                     }
                 }
             }
@@ -118,7 +122,7 @@ namespace music4life.ViewModels
 
             if (MusicFolders.Count == 0)
             {
-                if (WpfApp.Current.MainWindow.DataContext is MainViewModel mainVm)
+                if (Application.Current.MainWindow.DataContext is MainViewModel mainVm)
                 {
                     mainVm.RefreshData(new List<Song>());
                 }
@@ -127,7 +131,7 @@ namespace music4life.ViewModels
                 MusicManager.AllTracks.Clear();
 
                 StatusMessage = "Thư viện trống (Chưa chọn thư mục).";
-                System.Windows.MessageBox.Show("Đã xoá hết thư mục. Thư viện nhạc đã được làm trống.", "Thông báo");
+                MessageBox.Show("Đã xoá hết thư mục. Thư viện nhạc đã được làm trống.", "Thông báo");
                 return;
             }
 
@@ -143,18 +147,18 @@ namespace music4life.ViewModels
 
                 var newSongs = MusicManager.AllTracks;
 
-                if (WpfApp.Current.MainWindow.DataContext is MainViewModel mainVm)
+                if (Application.Current.MainWindow.DataContext is MainViewModel mainVm)
                 {
                     mainVm.RefreshData(newSongs.ToList());
                 }
 
                 StatusMessage = $"Hoàn tất! Tìm thấy {newSongs.Count} bài hát.";
-                System.Windows.MessageBox.Show($"Đã quét xong! Tìm thấy {newSongs.Count} bài hát.", "Thành công");
+                MessageBox.Show($"Đã quét xong! Tìm thấy {newSongs.Count} bài hát.", "Thành công");
             }
             catch (Exception ex)
             {
                 StatusMessage = "Có lỗi xảy ra.";
-                System.Windows.MessageBox.Show("Có lỗi xảy ra: " + ex.Message, "Lỗi");
+                MessageBox.Show("Có lỗi xảy ra: " + ex.Message, "Lỗi");
             }
             finally
             {
@@ -190,7 +194,7 @@ namespace music4life.ViewModels
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show("Lỗi khi lưu: " + ex.Message);
+                MessageBox.Show("Lỗi khi lưu: " + ex.Message);
             }
         }
 

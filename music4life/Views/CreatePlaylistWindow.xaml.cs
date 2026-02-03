@@ -16,7 +16,6 @@ namespace music4life.Views
         public CreatePlaylistWindow(string currentName) : this()
         {
             TxtPlaylistName.Text = currentName;
-
             TxtPlaylistName.SelectAll();
             TxtPlaylistName.Focus();
 

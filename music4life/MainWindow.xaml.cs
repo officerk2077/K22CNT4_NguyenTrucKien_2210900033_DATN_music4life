@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -11,7 +11,6 @@ using music4life.Models;
 using music4life.Services;
 using music4life.ViewModels;
 using music4life.Views;
-using System.Collections.Generic; // Thêm thư viện này để dùng List<>
 
 namespace music4life
 {
@@ -47,7 +46,6 @@ namespace music4life
         private void BtnAllSongs_Click(object sender, RoutedEventArgs e)
         {
             _viewModel.SearchText = string.Empty;
-            // Lấy lại toàn bộ danh sách gốc khi bấm nút "All Songs"
             if (_viewModel.AllSongs != null)
             {
                 _viewModel.RefreshData(_viewModel.AllSongs.ToList());
@@ -94,12 +92,10 @@ namespace music4life
             }
         }
 
-        // --- [PHẦN CẬP NHẬT QUAN TRỌNG] ---
         private async void LoadAndScanMusicOnStartup()
         {
             var folders = new List<string>();
 
-            // 1. Đọc file cấu hình nếu có
             if (File.Exists("settings.json"))
             {
                 try
@@ -115,7 +111,6 @@ namespace music4life
                 catch { }
             }
 
-            // 2. Nếu chưa có thư mục nào, tự động lấy thư mục Music mặc định của Windows
             if (folders.Count == 0)
             {
                 string defaultMusic = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
@@ -125,27 +120,20 @@ namespace music4life
                 }
             }
 
-            // 3. Gọi hàm quét nhạc đã được tối ưu hóa ở MusicManager
-            // Hàm này chạy đa luồng nên sẽ không làm đơ ứng dụng
             if (folders.Count > 0)
             {
                 await MusicManager.ScanMusic(folders);
             }
 
-            // 4. Cập nhật dữ liệu lên giao diện (đảm bảo chạy trên luồng UI)
             this.Dispatcher.Invoke(() =>
             {
-                // RefreshData sẽ nạp dữ liệu vào ViewModel để hiển thị
                 if (MusicManager.AllTracks != null)
                 {
                     _viewModel.RefreshData(MusicManager.AllTracks.ToList());
                 }
-
-                // Đảm bảo hiển thị màn hình danh sách bài hát đầu tiên
                 SwitchToSongList();
             });
         }
-        // ------------------------------------
 
         private void BtnSettings_Click(object sender, RoutedEventArgs e)
         {
@@ -198,8 +186,6 @@ namespace music4life
                 _viewModel.SeekTo(s.Value);
             }
         }
-
-        private void seekSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) { }
 
         private void BtnCloseApp_Click(object sender, RoutedEventArgs e) => System.Windows.Application.Current.Shutdown();
 

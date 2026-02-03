@@ -32,16 +32,20 @@ namespace music4life.Converters
                         image.DecodePixelWidth = 200;
                         image.CacheOption = BitmapCacheOption.OnLoad;
                         image.EndInit();
-                        image.Freeze();
+                        image.Freeze(); 
 
                         if (_cache.Count > 200) _cache.Clear();
+
                         _cache[filePath] = image;
 
                         return image;
                     }
                 }
             }
-            catch { }
+            catch
+            {
+
+            }
 
             return null;
         }

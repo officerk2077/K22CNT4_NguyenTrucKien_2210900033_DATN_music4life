@@ -1,4 +1,5 @@
-﻿using music4life.Models;
+﻿using System;
+using music4life.Models;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -32,8 +33,7 @@ namespace music4life.Services
         public static void CreatePlaylist(string name)
         {
             if (AllPlaylists.Any(p => p.Name == name)) return;
-
-            var newPl = new Playlist { Name = name, CreatedDate = System.DateTime.Now };
+            var newPl = new Playlist { Name = name, CreatedDate = DateTime.Now };
 
             DatabaseService.Conn.Insert(newPl);
 
