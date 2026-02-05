@@ -208,11 +208,11 @@
                                         Width="140" Maximum="12" Minimum="0" 
                                         Value="{Binding CrossfadeSeconds, UpdateSourceTrigger=PropertyChanged}"
                                         TickFrequency="1" IsSnapToTickEnabled="True"
-                                        
+                                       
                                         Style="{StaticResource ModernSliderStyle}"
                                         AutoToolTipPlacement="TopLeft" 
                                         AutoToolTipPrecision="0"
-                                        
+                                       
                                         VerticalAlignment="Center"/>
 
                                 <TextBlock Text="12s" Foreground="{StaticResource Brush.Text.Secondary}" FontSize="12" VerticalAlignment="Center" Margin="10,0,0,0"/>
@@ -235,9 +235,8 @@
                         Width="80" Margin="0,0,10,0" Foreground="#AAA" Click="BtnClose_Click"/>
 
                 <Button Content="Lưu Cài Đặt" Style="{StaticResource PrimaryBtnStyle}" 
-                        Width="140" Command="{Binding SaveSettingsCommand}"
-                        CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
+                        Width="140" Click="BtnSave_Click"/>
             </StackPanel>
         </Grid>
     </Border>
-</Window>   
+</Window>

@@ -4,9 +4,6 @@ using music4life.ViewModels;
 
 namespace music4life.Views
 {
-    /// <summary>
-    /// Interaction logic for SettingWindow.xaml
-    /// </summary>
     public partial class SettingWindow : Window
     {
         public SettingWindow()
@@ -24,6 +21,24 @@ namespace music4life.Views
 
         private void BtnClose_Click(object sender, RoutedEventArgs e)
         {
+            this.Close();
+        }
+
+        private void BtnSave_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.DataContext is SettingsViewModel vm)
+            {
+                if (vm.SaveSettingsCommand != null && vm.SaveSettingsCommand.CanExecute(null))
+                {
+                    vm.SaveSettingsCommand.Execute(null);
+                }
+            }
+
+            if (System.Windows.Application.Current.MainWindow is MainWindow mw)
+            {
+                mw.ShowToast("Đã lưu cài đặt thành công!");
+            }
+
             this.Close();
         }
     }

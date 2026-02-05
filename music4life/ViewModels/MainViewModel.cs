@@ -24,13 +24,8 @@ namespace music4life.ViewModels
         public string Artist { get; set; }
         public int SongCount { get; set; }
         public string FirstSongPath { get; set; }
-
         private ImageSource _albumCover;
-        public ImageSource AlbumCover
-        {
-            get => _albumCover;
-            set { _albumCover = value; OnPropertyChanged(); }
-        }
+        public ImageSource AlbumCover { get => _albumCover; set { _albumCover = value; OnPropertyChanged(); } }
     }
 
     public class ArtistInfo : BaseViewModel
@@ -39,13 +34,8 @@ namespace music4life.ViewModels
         public int SongCount { get; set; }
         public string SongCountText => $"{SongCount} bài hát";
         public string FirstSongPath { get; set; }
-
         private ImageSource _artistImage;
-        public ImageSource ArtistImage
-        {
-            get => _artistImage;
-            set { _artistImage = value; OnPropertyChanged(); }
-        }
+        public ImageSource ArtistImage { get => _artistImage; set { _artistImage = value; OnPropertyChanged(); } }
     }
 
     public class GenreInfo
@@ -67,11 +57,7 @@ namespace music4life.ViewModels
         private bool _isGenresLoaded = false;
 
         private bool _isBusy;
-        public bool IsBusy
-        {
-            get => _isBusy;
-            set { _isBusy = value; OnPropertyChanged(); }
-        }
+        public bool IsBusy { get => _isBusy; set { _isBusy = value; OnPropertyChanged(); } }
 
         private Song _songInSidebar;
         public Song SongInSidebar { get => _songInSidebar; set { _songInSidebar = value; OnPropertyChanged(); } }
@@ -94,9 +80,9 @@ namespace music4life.ViewModels
             }
         }
 
-        private ObservableCollection<GenreInfo> _genreList; public ObservableCollection<GenreInfo> GenreList { get => _genreList; set { _genreList = value; OnPropertyChanged(); } }
-        private ObservableCollection<ArtistInfo> _artistList; public ObservableCollection<ArtistInfo> ArtistList { get => _artistList; set { _artistList = value; OnPropertyChanged(); } }
-        private ObservableCollection<AlbumInfo> _albumList; public ObservableCollection<AlbumInfo> AlbumList { get => _albumList; set { _albumList = value; OnPropertyChanged(); } }
+        public ObservableCollection<GenreInfo> GenreList { get; set; } = new ObservableCollection<GenreInfo>();
+        public ObservableCollection<ArtistInfo> ArtistList { get; set; } = new ObservableCollection<ArtistInfo>();
+        public ObservableCollection<AlbumInfo> AlbumList { get; set; } = new ObservableCollection<AlbumInfo>();
 
         private Song _currentSong;
         public Song CurrentSong { get => _currentSong; set { _currentSong = value; OnPropertyChanged(); } }
@@ -156,22 +142,30 @@ namespace music4life.ViewModels
         public MainViewModel()
         {
             DisplayedTracks = new ObservableCollection<Song>();
-            GenreList = new ObservableCollection<GenreInfo>();
-            ArtistList = new ObservableCollection<ArtistInfo>();
-            AlbumList = new ObservableCollection<AlbumInfo>();
+            UserPlaylists = PlaylistService.AllPlaylists;
 
-            MusicManager.IsScanningChanged += (isScanning) =>
-            {
-                IsBusy = isScanning;
-            };
-
+            MusicManager.IsScanningChanged += (isScanning) => { IsBusy = isScanning; };
             MusicPlayer.SongChanged += OnSongChanged;
             MusicPlayer.PlaybackStateChanged += OnPlaybackStateChanged;
             MusicPlayer.PositionChanged += OnPositionChanged;
 
-            UserPlaylists = PlaylistService.AllPlaylists;
-
             InitializeCommands();
+
+            LoadSongsFromDb();
+        }
+
+        public void LoadSongsFromDb()
+        {
+            try
+            {
+                DatabaseService.Init();
+                var cachedSongs = DatabaseService.Conn.Table<Song>().ToList();
+                if (cachedSongs.Any())
+                {
+                    RefreshData(cachedSongs);
+                }
+            }
+            catch (Exception ex) { System.Diagnostics.Debug.WriteLine("LoadSongsFromDb Error: " + ex.Message); }
         }
 
         private void UpdateSongInfoDisplay(Song song)
@@ -302,9 +296,19 @@ namespace music4life.ViewModels
                 if (targetPlaylist != null && SelectedSong != null)
                 {
                     PlaylistService.AddSongToPlaylist(targetPlaylist, SelectedSong.FilePath);
-                    MessageBox.Show($"Đã thêm '{SelectedSong.Title}' vào playlist '{targetPlaylist.Name}'", "Thành công");
+
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        if (Application.Current.MainWindow is MainWindow mw)
+                        {
+                            mw.ShowToast($"Đã thêm '{SelectedSong.Title}' vào playlist '{targetPlaylist.Name}'");
+                        }
+                    });
                 }
-                else if (SelectedSong == null) { MessageBox.Show("Vui lòng chọn một bài hát trước!", "Thông báo"); }
+                else if (SelectedSong == null)
+                {
+                    MessageBox.Show("Vui lòng chọn một bài hát trước!", "Thông báo");
+                }
             });
 
             OpenPlaylistCommand = new RelayCommand<Playlist>((playlist) => {
@@ -316,40 +320,17 @@ namespace music4life.ViewModels
             DeletePlaylistCommand = new RelayCommand<Playlist>((playlist) =>
             {
                 if (playlist == null) return;
-                var result = MessageBox.Show(
-                    $"Bạn có chắc muốn xóa playlist '{playlist.Name}' không?",
-                    "Xác nhận xóa",
-                    MessageBoxButton.YesNo,
-                    MessageBoxImage.Warning);
-
-                if (result == MessageBoxResult.Yes)
-                {
-                    PlaylistService.DeletePlaylist(playlist);
-                    UserPlaylists = PlaylistService.AllPlaylists;
-                }
+                var result = MessageBox.Show($"Bạn có chắc muốn xóa playlist '{playlist.Name}' không?", "Xác nhận xóa", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                if (result == MessageBoxResult.Yes) { PlaylistService.DeletePlaylist(playlist); UserPlaylists = PlaylistService.AllPlaylists; }
             });
 
             RenamePlaylistCommand = new RelayCommand<Playlist>((playlist) =>
             {
                 if (playlist == null) return;
                 var renameWindow = new music4life.Views.CreatePlaylistWindow(playlist.Name);
-
-                if (Application.Current.MainWindow != null)
-                {
-                    renameWindow.Owner = Application.Current.MainWindow;
-                    Application.Current.MainWindow.Opacity = 0.5;
-                }
-
-                if (renameWindow.ShowDialog() == true)
-                {
-                    string newName = renameWindow.CreatedPlaylistName;
-                    PlaylistService.RenamePlaylist(playlist, newName);
-                }
-
-                if (Application.Current.MainWindow != null)
-                {
-                    Application.Current.MainWindow.Opacity = 1.0;
-                }
+                if (Application.Current.MainWindow != null) { renameWindow.Owner = Application.Current.MainWindow; Application.Current.MainWindow.Opacity = 0.5; }
+                if (renameWindow.ShowDialog() == true) { string newName = renameWindow.CreatedPlaylistName; PlaylistService.RenamePlaylist(playlist, newName); }
+                if (Application.Current.MainWindow != null) Application.Current.MainWindow.Opacity = 1.0;
             });
         }
 
@@ -360,12 +341,6 @@ namespace music4life.ViewModels
             _isAlbumsLoaded = false;
             _isArtistsLoaded = false;
             _isGenresLoaded = false;
-
-            AlbumList.Clear();
-            ArtistList.Clear();
-            GenreList.Clear();
-
-            _isViewingFavorites = false;
 
             foreach (var song in newSongs)
             {
@@ -385,88 +360,63 @@ namespace music4life.ViewModels
 
         public void LoadAlbumsAsync()
         {
-            if (_isAlbumsLoaded && AlbumList != null && AlbumList.Count > 0) return;
-
             var groups = AllSongs.GroupBy(s => s.Album).Select(g =>
             {
                 string artistName = g.FirstOrDefault()?.Artist ?? "Unknown Artist";
                 string albumTitle = string.IsNullOrWhiteSpace(g.Key) ? "Unknown Album" : g.Key;
-                return new AlbumInfo
-                {
-                    Title = albumTitle,
-                    Artist = artistName,
-                    SongCount = g.Count(),
-                    FirstSongPath = g.First().FilePath
-                };
+                return new AlbumInfo { Title = albumTitle, Artist = artistName, SongCount = g.Count(), FirstSongPath = g.First().FilePath };
             }).OrderBy(a => a.Title).ToList();
 
-            AlbumList = new ObservableCollection<AlbumInfo>(groups);
+            AlbumList.Clear();
+            foreach (var album in groups) AlbumList.Add(album);
             _isAlbumsLoaded = true;
 
             Task.Run(() =>
             {
                 foreach (var album in groups)
                 {
-                    if (album.AlbumCover != null) continue;
-
                     var img = GetSongCover(album.FirstSongPath);
-                    if (img != null)
-                    {
-                        album.AlbumCover = img;
-                    }
+                    if (img != null) Application.Current.Dispatcher.Invoke(() => album.AlbumCover = img);
                 }
             });
         }
 
         public void LoadArtistsAsync()
         {
-            if (_isArtistsLoaded && ArtistList != null && ArtistList.Count > 0) return;
-
             var groups = AllSongs.GroupBy(s => s.Artist).Select(g =>
             {
-                return new ArtistInfo
-                {
-                    Name = g.Key,
-                    SongCount = g.Count(),
-                    FirstSongPath = g.First().FilePath
-                };
+                return new ArtistInfo { Name = g.Key, SongCount = g.Count(), FirstSongPath = g.First().FilePath };
             }).OrderBy(a => a.Name).ToList();
 
-            ArtistList = new ObservableCollection<ArtistInfo>(groups);
+            ArtistList.Clear();
+            foreach (var artist in groups) ArtistList.Add(artist);
             _isArtistsLoaded = true;
 
             Task.Run(() =>
             {
                 foreach (var artist in groups)
                 {
-                    if (artist.ArtistImage != null) continue;
-
                     var img = GetSongCover(artist.FirstSongPath);
-                    if (img != null)
-                    {
-                        artist.ArtistImage = img;
-                    }
+                    if (img != null) Application.Current.Dispatcher.Invoke(() => artist.ArtistImage = img);
                 }
             });
         }
 
         public async void LoadGenresAsync()
         {
-            if (_isGenresLoaded && GenreList != null && GenreList.Count > 0) return;
-
             await Task.Run(() =>
             {
                 if (AllSongs == null || AllSongs.Count == 0) return;
-
                 var groups = AllSongs.GroupBy(s => s.Genre).Select(g =>
                 {
                     string genreName = string.IsNullOrWhiteSpace(g.Key) ? "Unknown Genre" : g.Key;
                     return new GenreInfo { Name = genreName, SongCount = g.Count() };
                 }).OrderBy(g => g.Name).ToList();
 
-                System.Windows.Application.Current.Dispatcher.Invoke(() =>
+                Application.Current.Dispatcher.Invoke(() =>
                 {
-                    GenreList = new ObservableCollection<GenreInfo>(groups);
+                    GenreList.Clear();
+                    foreach (var genre in groups) GenreList.Add(genre);
                     _isGenresLoaded = true;
                 });
             });
@@ -475,7 +425,7 @@ namespace music4life.ViewModels
         public void FilterSongsByArtist(string artistName) { _isViewingFavorites = false; var filtered = AllSongs.Where(s => s.Artist == artistName).ToList(); DisplayedTracks = new ObservableCollection<Song>(filtered); TotalSongs = DisplayedTracks.Count; if (!string.IsNullOrEmpty(_currentSortType)) ApplySort(_currentSortType); }
         public void FilterSongsByAlbum(string albumName) { _isViewingFavorites = false; var filtered = AllSongs.Where(s => (string.IsNullOrWhiteSpace(albumName) && string.IsNullOrWhiteSpace(s.Album)) || s.Album == albumName).ToList(); DisplayedTracks = new ObservableCollection<Song>(filtered); TotalSongs = DisplayedTracks.Count; if (!string.IsNullOrEmpty(_currentSortType)) ApplySort(_currentSortType); }
         public void FilterSongsByGenre(string genreName) { _isViewingFavorites = false; var filtered = AllSongs.Where(s => (string.IsNullOrWhiteSpace(genreName) && string.IsNullOrWhiteSpace(s.Genre)) || s.Genre == genreName).ToList(); DisplayedTracks = new ObservableCollection<Song>(filtered); TotalSongs = DisplayedTracks.Count; if (!string.IsNullOrEmpty(_currentSortType)) ApplySort(_currentSortType); }
-        private void FilterSongs() { _isViewingFavorites = false; if (string.IsNullOrWhiteSpace(SearchText)) { if (DisplayedTracks.Count != AllSongs.Count) { DisplayedTracks = new ObservableCollection<Song>(AllSongs); TotalSongs = DisplayedTracks.Count; if (!string.IsNullOrEmpty(_currentSortType)) ApplySort(_currentSortType); } return; } var lowerText = SearchText.ToLower(); var filtered = AllSongs.Where(s => (s.Title != null && s.Title.ToLower().Contains(lowerText)) || (s.Artist != null && s.Artist.ToLower().Contains(lowerText))).ToList(); DisplayedTracks = new ObservableCollection<Song>(filtered); TotalSongs = DisplayedTracks.Count; }
+        private void FilterSongs() { _isViewingFavorites = false; if (string.IsNullOrWhiteSpace(SearchText)) { if (DisplayedTracks?.Count != AllSongs.Count) { DisplayedTracks = new ObservableCollection<Song>(AllSongs); TotalSongs = DisplayedTracks.Count; if (!string.IsNullOrEmpty(_currentSortType)) ApplySort(_currentSortType); } return; } var lowerText = SearchText.ToLower(); var filtered = AllSongs.Where(s => (s.Title != null && s.Title.ToLower().Contains(lowerText)) || (s.Artist != null && s.Artist.ToLower().Contains(lowerText))).ToList(); DisplayedTracks = new ObservableCollection<Song>(filtered); TotalSongs = DisplayedTracks.Count; }
         public void ApplySort(string sortType) { _currentSortType = sortType; List<Song> sortedList = null; var sourceList = DisplayedTracks.ToList(); switch (sortType) { case "Title_AZ": sortedList = sourceList.OrderBy(s => s.Title).ToList(); break; case "Title_ZA": sortedList = sourceList.OrderByDescending(s => s.Title).ToList(); break; case "Artist": sortedList = sourceList.OrderBy(s => s.Artist).ToList(); break; case "Album": sortedList = sourceList.OrderBy(s => s.Album).ToList(); break; case "Duration_Short": sortedList = sourceList.OrderBy(s => s.Duration).ToList(); break; case "Duration_Long": sortedList = sourceList.OrderByDescending(s => s.Duration).ToList(); break; case "DateAdded": sortedList = sourceList.OrderByDescending(s => s.DateAdded).ToList(); break; } if (sortedList != null) DisplayedTracks = new ObservableCollection<Song>(sortedList); }
         public void ChangeVolume(double step) { Volume = Math.Clamp(Volume + step, 0, 100); }
         public void SeekTo(double value) { MusicPlayer.Seek(value); }
